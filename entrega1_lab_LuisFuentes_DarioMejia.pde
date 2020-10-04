@@ -1,11 +1,16 @@
 import ddf.minim.*;
 PImage img,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14,img15,img16;
-int valor=1,etapa=0,una_sola_vez=0,cont,co=0,presionx=0,presionxd=0,contador=0;
+int valor=1,etapa=0,una_sola_vez=0,cont,co=0,presionx=0,presionxd=0,contador=0,conteo=0;
 String caso="sistema no amortiguado",t="",amplitud="",frecuencia="",fase_inicial="",pfinal="",vfinal="",tfinal="";
-boolean aux=true,aux2=true,aux3=true,aux4=true,aux5=false,aux6=false,aux7=false,musica=false,aux_etapa31=true,aux_etapa32=true,aux_etapa33=true,posicion=false,velocidad=false,aceleracion=false,aux_posicion=true,parar=false;
-float o,f,a,t1,n2=1,presion_final,volumen_final,temperatura_final,x1,v,a1;
+boolean aux=true,aux2=true,aux3=true,aux4=true,aux5=false,aux6=false,aux7=false,musica=false,presionar,aux_etapa31=true,aux_etapa32=true,aux_etapa33=true,posicion=false,velocidad=false,aceleracion=false,aux_posicion=true,parar=false;
+float o,f,a,t1,n2=1,presion_final,volumen_final,temperatura_final,x1,v,a1,t2,x2,x3;
 float posicionx,posiciony;
-long y=300,vel=5,cambio=vel;;   
+float y=300,vel=3,cambio=vel;;
+float pos1[]=new float[1000];
+float vel1[]=new float[1000];
+float ace1[]=new float[1000];
+
+
 
 int xspacing = 1;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
@@ -39,7 +44,7 @@ float[] yvalues3;  // Using an array to store height values for the wave
 
 Minim audio;
 AudioPlayer reproducir;
-  
+AudioPlayer boton;  
 
 
 int n,menos,funcion;
@@ -67,14 +72,15 @@ void setup(){
   img16=loadImage("resorte.png");
   audio=new Minim(this);
   reproducir=audio.loadFile("audio1.mp3");
+  boton=audio.loadFile("audio2.mp3");
  
   w = 500;
   dx = (TWO_PI / period) * xspacing;
   
-  w2 = 1000;
+  w2 = 500;
   dx2 = (TWO_PI / period2) * xspacing2;
  
-  w3 = 1000;
+  w3 = 500;
   dx3 = (TWO_PI / period) * xspacing;
   
 
@@ -103,7 +109,6 @@ void draw(){
       }
       textSize(50);
       text("presiona la tecla ENTER para continuar",150,600);
-      text("fdfsd",10,10);
   }
   
   //-------------------------------segunda etapa donde se pide el caso que se va a trabajr-------------------------
@@ -272,6 +277,7 @@ void draw(){
         image(img14,0,0);
         image(img15,100,30,150,50);
         image(img16,75,80,200,600-y);
+        image(img15,90,680-y,180,120);
         contador=contador+1;
  
         
@@ -302,19 +308,37 @@ void draw(){
      //calculo el tiempo por cada draw   
         if(contador==60){
           cont=cont+1;
-          contador=0;
+          if(cont!=t1){
+            contador=0;
+          }
+          
+          t2=cont/10;
+          
+          
+          
+          pos1[cont]=sin(f*cont+o);
+          pos1[cont]=pos1[cont]*a;
+          
+          vel1[cont]=cos(f*cont+o);
+          vel1[cont]=vel1[cont]*a*f;
+          
+          ace1[cont]=sin(f*cont+o);
+          ace1[cont]=ace1[cont]*f*f*-a;
+          
         }
         textSize(20);
         fill(255,255,255);
         
         
-        
-        
-   
+        x1=sin(f*t1+o);
+        x1=x1*a;
+        v=cos(f*t1+o);
+        v=v*a*f;
+        a1=sin(f*t1+o);
+        a1=a1*f*f*-a;
       
      if(posicion==true){
-         x1=sin(f*t1+o);
-         x1=x1*a;
+         
          yvalues = new float[w/xspacing];
          fill(255,255,255);
          text("P vs T",630,25);
@@ -325,7 +349,7 @@ void draw(){
          rect(30,560,500,50,25);
          textSize(20);
          fill(0,0,0);
-         text("posicion: "+x1+" m",50,590);    
+         text("posicion: "+pos1[cont]+" m",50,590);    
          calcWave();
          renderWave();
     
@@ -333,8 +357,7 @@ void draw(){
     }
     
     if(velocidad==true){
-        v=cos(f*t1+o);
-        v=v*a*f;
+        
         yvalues2 = new float[w2/xspacing2];
         noStroke();
         fill(255,255,255);
@@ -345,14 +368,13 @@ void draw(){
         rect(30,620,500,50,25);
         fill(0,0,0);
         textSize(20);
-        text("velocidad: "+v+" m/s",50,650);
+        text("velocidad: "+vel1[cont]+" m/s",50,650);
         calcWave2();
         renderWave2();
         
     }
     if(aceleracion==true){
-        a1=sin(f*t1+o);
-        a1=a1*f*f*-a;
+        
         yvalues3 = new float[w3/xspacing3];
         noStroke();
         fill(255,255,255);
@@ -363,7 +385,7 @@ void draw(){
         rect(30,680,500,50,25);
         fill(0,0,0);
         textSize(20);
-        text("aceleracion: "+a1+" m/s^2",50,710);
+        text("aceleracion: "+ace1[cont]+" m/s^2",50,710);
         calcWave3();
         renderWave3();
     }
@@ -392,6 +414,13 @@ void keyPressed(){
     //---------------------para ingresar los datos del tiempo ------------------------------------
     if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux==true && aux==true){
       t=t+key;
+      conteo=t.length();
+      if(conteo>18){
+        aux=false;
+        t1=Float.parseFloat(t);
+        t=t+" Seg";
+      }
+      
    }  
    
    
@@ -399,18 +428,37 @@ void keyPressed(){
       //---------------------para ingresar los datos de la amplitud ------------------------------------
    if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false){
       amplitud=amplitud+key;
+      conteo=amplitud.length();
+      if(conteo>20){
+        aux2=false;
+        a=Float.parseFloat(amplitud);
+        amplitud=amplitud+" m";
+      }
    }  
    
    
       //---------------------para ingresar los datos del frecuencia ------------------------------------
    if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false){
       frecuencia=frecuencia+key;
+      conteo=frecuencia.length();
+      if(conteo>17){
+      aux3=false;
+      f=Float.parseFloat(frecuencia);
+      frecuencia=frecuencia+" rads/s";
+      }
    }  
    
    
     //---------------------para ingresar los datos de la fase inicial ------------------------------------
    if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true){
       fase_inicial=fase_inicial+key;
+      conteo=fase_inicial.length();
+      if(conteo>18){
+        aux4=false;
+        o=Float.parseFloat(fase_inicial);
+        etapa=3;
+        fase_inicial=fase_inicial+" rad";
+      }
    }  
    
    
@@ -433,7 +481,6 @@ void mouseClicked(){
   
   if(mouseX>350 && mouseX<850 && mouseY>500 && mouseY<600 && etapa==1){
       etapa=2;
-     
   }
   
   //parar y reproducir musica   lo comente pq me estresaba escucharlo cada que lo ejecutaba
@@ -614,7 +661,7 @@ void calcWave2() {
 
   // For every x value, calculate a y value with sine function
   float x2 = theta2;
-  for (int i = 0; i < yvalues.length; i++) {
+  for (int i = 0; i < yvalues2.length; i++) {
     yvalues2[i] = sin(x2)*20;
     x2+=dx2;
   }
@@ -624,7 +671,7 @@ void renderWave2() {
   noStroke();
   fill(255);
   // A simple way to draw the wave with an ellipse at each location
-  for (int x = 0; x < yvalues.length; x++) {
+  for (int x = 0; x < yvalues2.length; x++) {
     
       ellipse(605+x*xspacing2, 380+yvalues2[x], 10, 10);
   
@@ -641,7 +688,7 @@ void calcWave3() {
 
   // For every x value, calculate a y value with sine function
   float x3 = theta3;
-  for (int i = 0; i < yvalues.length; i++) {
+  for (int i = 0; i < yvalues3.length; i++) {
     yvalues3[i] = sin(x3);
     x3+=dx3;
   }
@@ -651,10 +698,11 @@ void renderWave3() {
   noStroke();
   fill(255);
   // A simple way to draw the wave with an ellipse at each location
-  for (int x = 0; x < yvalues.length; x++) {
+  for (int x = 0; x < yvalues3.length; x++) {
     
-      ellipse(605+x*xspacing3, 620+yvalues3[x], 10, 10);
+      ellipse(605+x*xspacing3, 600+yvalues3[x], 10, 10);
   
     
   }
 }
+//prueba para git xd
