@@ -1,9 +1,9 @@
 import ddf.minim.*;
 PImage img,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14,img15,img16;
-int valor=1,etapa=0,una_sola_vez=0,cont,co=0,presionx=0,presionxd=0,contador=0,conteo=0;
-String caso="sistema no amortiguado",t="",amplitud="",frecuencia="",fase_inicial="",pfinal="",vfinal="",tfinal="";
-boolean aux=true,aux2=true,aux3=true,aux4=true,aux5=false,aux6=false,aux7=false,musica=false,presionar,aux_etapa31=true,aux_etapa32=true,aux_etapa33=true,posicion=false,velocidad=false,aceleracion=false,aux_posicion=true,parar=false;
-float o,f,a,t1,n2=1,presion_final,volumen_final,temperatura_final,x1,v,a1,t2,x2,x3;
+int valor=1,etapa=0,una_sola_vez=0,cont,co=0,presionx=0,presionxd=0,contador=0,conteo=0,condicion=0;
+String caso="sistema no amortiguado",t="",amplitud="",frecuencia="",fase_inicial="",pfinal="",vfinal="",tfinal="",masa="",elasticidad="",amortiguamiento="",caso_amortiguado="",angulo_de_fase="";
+boolean aux=true,aux2=true,aux3=true,aux4=true,aux5=true,aux6=true,aux7=false,musica=false,presionar,aux_etapa31=true,aux_etapa32=true,aux_etapa33=true,posicion=false,velocidad=false,aceleracion=false,aux_posicion=true,parar=false;
+float o,f,a,t1,n2=1,presion_final,volumen_final,temperatura_final,x1,v,a1,t2,x2,x3,m,b1,k,resultado,resultado2,o1;
 float posicionx,posiciony;
 float y=300,vel=3,cambio=vel;;
 float pos1[]=new float[1000];
@@ -16,8 +16,8 @@ int xspacing = 1;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
 
 float theta = 0.0;  // Start angle at 0
-float amplitude = 75.0;  // Height of wave
-float period = 500.0;  // How many pixels before the wave repeats
+float amplitude=75.0;  // Height of wave
+float period = 700.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
 
@@ -141,8 +141,8 @@ void draw(){
     etapa=2;
     if(caso=="sistema no amortiguado"){
       background(25,25,25);
-    image(img,0,0);
-    image(img6,10,30,500,700);
+      image(img,0,0);
+      image(img6,10,30,500,700);
     
     //------------creacion del menu de tiempo------------------
     fill(215,219,221);
@@ -206,7 +206,98 @@ void draw(){
     
     }
     else if(caso=="sistema amortiguado"){
-      background(0,0,0);
+     background(25,25,25);
+     image(img,0,0);
+     image(img6,10,30,500,200);
+      
+    //--------------------menu del timepo en sistema amortiguado-----------------------------  
+    fill(215,219,221);
+    noStroke();
+    rect(600,18,580,170,25);
+    fill(0,0,0);
+    text("Tiempo",830,50);
+    textSize(20);
+    image(img7,1080,80,50,50);
+    image(img8,650,80,50,50);
+    fill(255,255,255);
+    rect(715,80,350,50);
+    fill(0,0,0);
+    text(t, 750, 110);
+      
+    //---------------------------menu de la masa -----------------------------------------------  
+    fill(215,219,221);
+    noStroke();
+    rect(600,208,580,170,25);
+    fill(0,0,0);
+    text("Masa",830,250);
+    textSize(20);
+    image(img7,1080,270,50,50);
+    image(img8,650,270,50,50);
+    fill(255,255,255);
+    rect(715,270,350,50);
+    fill(0,0,0);
+    text(masa, 750, 300); 
+      
+      
+    //---------------------------------menu de la constante de elasticidada-------------------------
+    fill(215,219,221);
+    noStroke();
+    rect(600,398,580,170,25);
+    fill(0,0,0);
+    text("Constante de elasticidad",770,435);
+    textSize(20);
+    image(img7,1080,460,50,50);
+    image(img8,650,460,50,50);
+    fill(255,255,255);
+    rect(715,460,350,50);
+    fill(0,0,0);
+    text(elasticidad, 750, 490);
+    
+    
+    //-----------------------------menu de la constante de amortiguamiento--------------------------------------------
+    fill(215,219,221);
+    noStroke();
+    rect(600,588,580,150,25);
+    fill(0,0,0);
+    text("Constante de amortiguamiento",750,630);
+    textSize(20);
+    image(img7,1080,650,50,50);
+    image(img8,650,650,50,50);
+    fill(255,255,255);
+    rect(715,650,350,50);
+    fill(0,0,0);
+    text(amortiguamiento, 750, 680);  
+    
+    
+    //-----------------------------menu del angulo de fase--------------------------------------------
+    fill(215,219,221);
+    noStroke();
+    rect(10,588,580,150,25);
+    fill(0,0,0);
+    text("Angulo de fase",200,630);
+    textSize(20);
+    image(img7,480,650,50,50);
+    image(img8,50,650,50,50);
+    fill(255,255,255);
+    rect(120,650,350,50);
+    fill(0,0,0);
+    text(angulo_de_fase, 135, 680);  
+      
+    //---------------------------------menu de la amplitud-------------------------
+    fill(215,219,221);
+    noStroke();
+    rect(10,398,580,170,25);
+    fill(0,0,0);
+    text("Amplitud inicial",200,435);
+    textSize(20);
+    image(img7,480,460,50,50);
+    image(img8,50,460,50,50);
+    fill(255,255,255);
+    rect(120,460,350,50);
+    fill(0,0,0);
+    text(amplitud, 135, 490);   
+      
+      
       
     }
     
@@ -264,6 +355,30 @@ void draw(){
       
       }
       else if(caso=="sistema amortiguado"){
+        background(0,0,0);
+        resultado=(k/m)-((b1*b1)/4*m*m);
+        resultado2=2*sqrt(k*m);
+        f=sqrt((k/m)-((b1*b1)/4*m*m));
+        x1=pow((a*2.718),-(b1/2*m)*t1)*cos(f*t1+o1);
+        
+        
+        if(resultado==0 || resultado2==b1){
+          caso_amortiguado="amortiguamiento critico";
+          f=0;
+          condicion=1;
+        }
+        else if(b1>resultado2){
+          caso_amortiguado="sobreamortiguamiento";
+          condicion=2;
+        }
+        else if(b1<resultado2){
+          caso_amortiguado="subamortiguamiento";
+          condicion=3;
+        }
+        
+        
+        
+        
         
       }
   }
@@ -426,7 +541,7 @@ void keyPressed(){
    
    
       //---------------------para ingresar los datos de la amplitud ------------------------------------
-   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false){
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false && caso=="sistema no amortiguado"){
       amplitud=amplitud+key;
       conteo=amplitud.length();
       if(conteo>20){
@@ -438,7 +553,7 @@ void keyPressed(){
    
    
       //---------------------para ingresar los datos del frecuencia ------------------------------------
-   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false){
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && caso=="sistema no amortiguado"){
       frecuencia=frecuencia+key;
       conteo=frecuencia.length();
       if(conteo>17){
@@ -450,7 +565,7 @@ void keyPressed(){
    
    
     //---------------------para ingresar los datos de la fase inicial ------------------------------------
-   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true){
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && caso=="sistema no amortiguado"){
       fase_inicial=fase_inicial+key;
       conteo=fase_inicial.length();
       if(conteo>18){
@@ -460,6 +575,69 @@ void keyPressed(){
         fase_inicial=fase_inicial+" rad";
       }
    }  
+   
+   
+   
+   // --------------------------------- ingreso de los datos del sistema amortiguado ---------------------------------------------------
+   
+    //---------------------para ingresar los datos de la masa ------------------------------------
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false && caso=="sistema amortiguado"){
+      masa=masa+key;
+      conteo=masa.length();
+      if(conteo>20){
+        aux2=false;
+        m=Float.parseFloat(masa);
+        masa=masa+" kg";
+      }
+   }  
+   
+   
+      //---------------------para ingresar los datos de la constante de elasticidad ------------------------------------
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && caso=="sistema amortiguado"){
+      elasticidad=elasticidad+key;
+      conteo=elasticidad.length();
+      if(conteo>17){
+      aux3=false;
+      k=Float.parseFloat(elasticidad);
+      elasticidad=elasticidad+" N/m";
+      }
+   }  
+   
+   
+    //---------------------para ingresar los datos de la constante de amortiguamineto ------------------------------------
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && caso=="sistema amortiguado"){
+      amortiguamiento=amortiguamiento+key;
+      conteo=amortiguamiento.length();
+      if(conteo>18){
+        aux4=false;
+        b1=Float.parseFloat(amortiguamiento);
+        amortiguamiento=amortiguamiento+" kg/s";
+      }
+   }
+   
+   //---------------------para ingresar los datos de la amplitud ------------------------------------
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && aux3==false && aux2==false && aux==false && aux6==true && caso=="sistema amortiguado" && aux4==false){
+      amplitud=amplitud+key;
+      conteo=amplitud.length();
+      if(conteo>18){
+        aux6=false;
+        a=Float.parseFloat(amplitud);
+        amplitud=amplitud+" m";
+      }
+   }
+   
+   
+   //---------------------para ingresar los datos del angulo de fase ------------------------------------
+   if(cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux5==true && aux3==false && aux2==false && aux==false && aux5==true && caso=="sistema amortiguado" && aux4==false && aux6==false){
+      angulo_de_fase=angulo_de_fase+key;
+      conteo=angulo_de_fase.length();
+      if(conteo>18){
+        aux5=false;
+        o1=Float.parseFloat(angulo_de_fase);
+        etapa=3;
+        angulo_de_fase=angulo_de_fase+" °";
+      }
+   }
    
    
    
@@ -483,7 +661,7 @@ void mouseClicked(){
       etapa=2;
   }
   
-  //parar y reproducir musica   lo comente pq me estresaba escucharlo cada que lo ejecutaba
+  //parar y reproducir musica  lo comente pq me estresaba escucharlo cada que lo ejecutaba
   if(mouseX>50 && mouseX<120 && mouseY>30 && mouseY<100 && etapa==0){
      if(musica==true){
        musica=false;
@@ -520,12 +698,12 @@ void mouseClicked(){
   
   
   // ------------------- los controles para el menu de la amplitud----------------------
-   if(mouseX>1080 && mouseX<1130 && mouseY>270 && mouseY<320 && etapa==2){
+   if(mouseX>1080 && mouseX<1130 && mouseY>270 && mouseY<320 && etapa==2 && caso=="sistema no amortiguado"){
       amplitud="";
       aux2=true;
   }
   
-  if(mouseX>650 && mouseX<700 && mouseY>270 && mouseY<320 && etapa==2 && aux2==true && aux==false){
+  if(mouseX>650 && mouseX<700 && mouseY>270 && mouseY<320 && etapa==2 && aux2==true && aux==false && caso=="sistema no amortiguado"){
       
       try{
         aux2=false;
@@ -543,12 +721,12 @@ void mouseClicked(){
   
   
 // ------------------- los controles para el menu de la frecuencia----------------------
-   if(mouseX>1080 && mouseX<1130 && mouseY>460 && mouseY<510 && etapa==2){
+   if(mouseX>1080 && mouseX<1130 && mouseY>460 && mouseY<510 && etapa==2 && caso=="sistema no amortiguado"){
       frecuencia="";
       aux3=true;
   }
   
-  if(mouseX>650 && mouseX<700 && mouseY>460 && mouseY<510 && etapa==2 && aux3==true && aux2==false && aux==false){
+  if(mouseX>650 && mouseX<700 && mouseY>460 && mouseY<510 && etapa==2 && aux3==true && aux2==false && aux==false && caso=="sistema no amortiguado"){
       
     try{
       aux3=false;
@@ -567,12 +745,12 @@ void mouseClicked(){
   
   
   // ------------------- los controles para el menu de la fase inicial----------------------
-   if(mouseX>1080 && mouseX<1130 && mouseY>650 && mouseY<700 && etapa==2){
+   if(mouseX>1080 && mouseX<1130 && mouseY>650 && mouseY<700 && etapa==2 && caso=="sistema no amortiguado"){
       fase_inicial="";
       aux4=true;
   }
   
-  if(mouseX>650 && mouseX<700 && mouseY>650 && mouseY<700 && etapa==2 && aux4==true && aux3==false && aux2==false && aux==false){
+  if(mouseX>650 && mouseX<700 && mouseY>650 && mouseY<700 && etapa==2 && aux4==true && aux3==false && aux2==false && aux==false && caso=="sistema no amortiguado"){
       
     try{
       aux4=false;
@@ -614,8 +792,123 @@ void mouseClicked(){
           
   }
   
+  //-----------------------------------------sistema amortiguado-----------------------------------------------------------------
+  
+    // ------------------- los controles para el menu de la masa----------------------
+   if(mouseX>1080 && mouseX<1130 && mouseY>270 && mouseY<320 && etapa==2 && caso=="sistema amortiguado"){
+      masa="";
+      aux2=true;
+  }
+  
+  if(mouseX>650 && mouseX<700 && mouseY>270 && mouseY<320 && etapa==2 && aux2==true && aux==false && caso=="sistema amortiguado"){
+      
+      try{
+        aux2=false;
+        m=Float.parseFloat(masa);
+        masa=masa+" kg";
+        
+      }catch(Exception e){
+        masa="";
+        aux2=true;
+      }
+    
+      
+  }
   
   
+  
+// ------------------- los controles para el menu de la constante de elasticidad----------------------
+   if(mouseX>1080 && mouseX<1130 && mouseY>460 && mouseY<510 && etapa==2 && caso=="sistema amortiguado"){
+      elasticidad="";
+      aux3=true;
+  }
+  
+  if(mouseX>650 && mouseX<700 && mouseY>460 && mouseY<510 && etapa==2 && aux3==true && aux2==false && aux==false && caso=="sistema amortiguado"){
+      
+    try{
+      aux3=false;
+      k=Float.parseFloat(elasticidad);
+      elasticidad=elasticidad+" N/m";
+    }catch(Exception e){
+      elasticidad="";
+      aux3=true;
+    }
+    
+    
+      
+  }
+  
+  
+  
+  
+  // ------------------- los controles para el menu de la constante de amortigumiento----------------------
+   if(mouseX>1080 && mouseX<1130 && mouseY>650 && mouseY<700 && etapa==2 && caso=="sistema amortiguado"){
+      amortiguamiento="";
+      aux4=true;
+  }
+  
+  if(mouseX>650 && mouseX<700 && mouseY>650 && mouseY<700 && etapa==2 && aux4==true && aux3==false && aux2==false && aux==false && caso=="sistema amortiguado"){
+      
+    try{
+      aux4=false;
+      b1=Float.parseFloat(amortiguamiento);
+      amortiguamiento=amortiguamiento+" kg/s";
+      
+    }catch(Exception e){
+     amortiguamiento="";
+      aux4=true;
+    }
+    
+    
+      
+  }
+  
+  
+  // ------------------- los controles para el menu de la amplitud----------------------
+   if(mouseX>480 && mouseX<530 && mouseY>460 && mouseY<510 && etapa==2 && caso=="sistema amortiguado"){
+      amplitud="";
+      aux6=true;
+  }
+  
+  if(mouseX>50 && mouseX<100 && mouseY>460 && mouseY<510 && etapa==2 && aux4==false && aux3==false && aux2==false && aux==false && caso=="sistema amortiguado" && aux6==true){
+      
+    try{
+      aux6=false;
+      a=Float.parseFloat(amplitud);
+      amplitud=amplitud+" m";
+      
+    }catch(Exception e){
+     amplitud="";
+      aux6=true;
+    }
+    
+    
+      
+  }
+  
+  
+    // ------------------- los controles para el menu del angulo de fase----------------------
+   if(mouseX>480 && mouseX<530 && mouseY>650 && mouseY<700 && etapa==2 && caso=="sistema amortiguado"){
+      angulo_de_fase="";
+      aux5=true;
+  }
+  
+  if(mouseX>50 && mouseX<100 && mouseY>650 && mouseY<700 && etapa==2 && aux5==true && aux3==false && aux2==false && aux==false && caso=="sistema amortiguado" && aux4==false && aux6==false){
+      
+    try{
+      aux5=false;
+      o1=Float.parseFloat(angulo_de_fase);
+      etapa=3;
+      angulo_de_fase=angulo_de_fase+" °";
+      
+    }catch(Exception e){
+     angulo_de_fase="";
+      aux5=true;
+    }
+    
+    
+      
+  }
   
   
   
