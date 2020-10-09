@@ -1,5 +1,5 @@
 import ddf.minim.*;
-PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17;
+PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19,img20;
 int valor=2, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3;
 String caso="sistema amortiguado", t="", amplitud="", frecuencia="", fase_inicial="", pfinal="", vfinal="", tfinal="", masa="", elasticidad="", amortiguamiento="", caso_amortiguado="", angulo_de_fase="";
 boolean mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=false, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false;
@@ -18,7 +18,7 @@ int w;              // Width of entire wave
 
 float theta = 0.0;  // Start angle at 0
 float amplitude=75.0;  // Height of wave
-float period = 700.0;  // How many pixels before the wave repeats
+float period = 400.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
 
@@ -68,10 +68,13 @@ void setup() {
   img11=loadImage("audiooff.png"); 
   img12=loadImage("aceptar.png"); 
   img13=loadImage("cancelar.png");
-  img14=loadImage("lab.jpg");
+  img14=loadImage("lab.png");
   img15=loadImage("cuadrado.png");
   img16=loadImage("resorte.png");
   img17=loadImage("agua.png");
+  img18=loadImage("menu.png");
+  img19=loadImage("cientifico.png");
+  img20=loadImage("atras.png");
   audio=new Minim(this);
   reproducir=audio.loadFile("audio1.mp3");
   boton=audio.loadFile("audio2.mp3");
@@ -107,7 +110,13 @@ void draw() {
       image(img11, 50, 30, 70, 70);
     }
     textSize(50);
-    text("presiona la tecla ENTER para continuar", 150, 600);
+    image(img5, 250, 450, 700, 70);
+    text("Continuar", 480, 500);
+    image(img5, 250, 540, 700, 70);
+    text("Instrucciones", 450, 590);
+    image(img5, 250, 630, 700, 70);
+    text("Salir", 550, 680);
+    image(img18, 150, -100, 900, 600);
   }
 
   //-------------------------------segunda etapa donde se pide el caso que se va a trabajr-------------------------
@@ -127,10 +136,6 @@ void draw() {
     text(caso, 380, 360);
     image(img5, 350, 500, 500, 100);
     text("aceptar", 520, 560);
-    /*fill(24,106,59);
-     rect(330,500,550,100,25);
-     fill(255,255,255);
-     text("aceptar",520,560);*/
   }
 
   //------------Primera etapa donde se piden todos los valores iniciales--------------------------
@@ -204,7 +209,7 @@ void draw() {
     } else if (caso=="sistema amortiguado") {
       background(25, 25, 25);
       image(img, 0, 0);
-      image(img6, 10, 30, 500, 200);
+      image(img19, 50, 5, 500, 400);
 
       //--------------------menu del timepo en sistema amortiguado-----------------------------  
       fill(215, 219, 221);
@@ -352,8 +357,25 @@ void draw() {
         condicion=3;
       }
 
-      condicion=3; // quita esta linea de codigo vro
-      etapa=4;
+      caso_amortiguado="amortiguamiento critico"; //quita estas lineas de codigo
+      condicion=2; // quita esta linea de codigo vro
+
+      image(img, 0, 0);
+      fill(27, 38, 49);
+      noStroke();
+      rect(80, 30, 1050, 700, 25);
+
+      textSize(50);
+      fill(255, 255, 255);
+      text("La condicion de su oscilador es de:", 180, 150);
+      fill(215, 219, 221);
+      rect(250, 180, 700, 300, 25);   
+      fill(255, 255, 255);
+      textSize(40);
+      text(caso_amortiguado, 370, 310);
+
+      image(img5, 250, 500, 700, 100);
+      text("continuar", 500, 560);
     }
   }
 
@@ -369,6 +391,10 @@ void draw() {
       image(img15, 90, 680-y, 180, 120);
       contador=contador+1;
 
+
+      if (t1==0) {
+        parar=true;
+      }
 
       //--------------hago el contador de cuanto se demora la animacion----------------------------
       if (cont==t1) {
@@ -390,6 +416,7 @@ void draw() {
       if (y<280) {
         cambio=-vel;
       }
+
 
       //calculo el tiempo por cada draw   
       if (contador==60) {
@@ -434,9 +461,13 @@ void draw() {
         rect(30, 560, 500, 50, 25);
         textSize(20);
         fill(0, 0, 0);
+
         text("posicion: "+pos1[cont]+" m", 50, 590);    
-        if (parar==false) {
+        if (parar==false && t1!=0) {
           calcWave();
+          fill(66, 73, 73);
+          rect(602, 120, 580, 2);
+          rect(600, 45, 2, 170);
         }
         renderWave();
       }
@@ -454,8 +485,11 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         text("velocidad: "+vel1[cont]+" m/s", 50, 650);
-        if (parar==false) {
+        if (parar==false && t1!=0) {
           calcWave2();
+          fill(66, 73, 73);
+          rect(602, 380, 580, 2);
+          rect(600, 290, 2, 170);
         }
         renderWave2();
       }
@@ -472,8 +506,11 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
-        if (parar==false) {
+        if (parar==false && t1!=0) {
           calcWave3();
+          fill(66, 73, 73);
+          rect(602, 630, 580, 2);
+          rect(600, 540, 2, 170);
         }
 
         renderWave3();
@@ -487,6 +524,10 @@ void draw() {
       image(img15, 90, y+80, 180, 120);
 
       contador=contador+1;
+
+      if (t1==0) {
+        parar=true;
+      }
 
       //--------------hago el contador de cuanto se demora la animacion----------------------------
       if (cont==t1) {
@@ -509,7 +550,7 @@ void draw() {
         }
       }
 
-
+      //graficas si son subamortiguado
       if (condicion==3) {
 
         //--------------cambios de velocidad--------------------------
@@ -541,12 +582,15 @@ void draw() {
         //text("posicion: "+pos1[cont]+" m", 50, 590);    
         if (parar==false) {
           calcWave();
+          fill(66, 73, 73);
+          rect(602, 120, 580, 2);
+          rect(600, 45, 2, 170);
           if (amplitude>15) {
             amplitude=amplitude-0.25;
           }
         }
         renderWave();
-        
+
         //grafia de velocidad vs tiempo
         yvalues2 = new float[w2/xspacing2];
         noStroke();
@@ -559,26 +603,117 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         //text("velocidad: "+vel1[cont]+" m/s", 50, 650);
-        if (parar==false) {
+        if (parar==false && t1!=0) {
           calcWave2();
+          fill(66, 73, 73);
+          rect(602, 380, 580, 2);
+          rect(600, 290, 2, 170);
         }
         renderWave2();
-        
-        
-        
+
+        //grafica de aceleracion
+        yvalues3 = new float[w3/xspacing3];
+        noStroke();
+        fill(255, 255, 255);
+        text("A vs T", 630, 520);
+        fill(215, 219, 221);
+        rect(600, 530, 580, 200, 25);
+        fill(215, 219, 221);
+        //rect(30, 680, 500, 50, 25);
+        fill(0, 0, 0);
+        textSize(20);
+        // text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
+        if (parar==false && t1!=0) {
+          calcWave3();
+          fill(66, 73, 73);
+          rect(602, 630, 580, 2);
+          rect(600, 540, 2, 170);
+        }
+        renderWave3();
+      } else if (condicion==2) {
+        //--------------cambios de velocidad--------------------------
+        if (y>max) {
+          cambio=vel;
+
+          if (vel>0) {
+            vel=vel-0.075;
+          }
+
+          if (max!=300) {
+            max=max-5;
+          }
+        }
+        if (y<min) {
+          cambio=-vel;
+        }
+        //grafia de posicion
+        yvalues = new float[w/xspacing];
+        fill(255, 255, 255);
+        text("P vs T", 630, 25);
+        fill(215, 219, 221);
+        rect(600, 30, 580, 200, 25);
+        noStroke();
+        fill(215, 219, 221);
+        // rect(30, 560, 500, 50, 25);
+        textSize(20);
+        fill(0, 0, 0);
+        //text("posicion: "+pos1[cont]+" m", 50, 590);    
+        if (parar==false && t1!=0) {
+          calcWave();
+          fill(66, 73, 73);
+          rect(602, 120, 580, 2);
+          rect(600, 45, 2, 170);
+          if (amplitude>15) {
+            amplitude=amplitude-0.25;
+          }
+        }
+        renderWave();
+
+        //grafia de velocidad vs tiempo
+        yvalues2 = new float[w2/xspacing2];
+        noStroke();
+        fill(255, 255, 255);
+        text("V vs T", 630, 270);
+        fill(215, 219, 221);
+        rect(600, 280, 580, 200, 25);
+        fill(215, 219, 221);
+        //rect(30, 620, 500, 50, 25);
+        fill(0, 0, 0);
+        textSize(20);
+        //text("velocidad: "+vel1[cont]+" m/s", 50, 650);
+        if (parar==false && t1!=0) {
+          calcWave2();
+          fill(66, 73, 73);
+          rect(602, 380, 580, 2);
+          rect(600, 290, 2, 170);
+        }
+        renderWave2();
+
+        //grafica de aceleracion
+        yvalues3 = new float[w3/xspacing3];
+        noStroke();
+        fill(255, 255, 255);
+        text("A vs T", 630, 520);
+        fill(215, 219, 221);
+        rect(600, 530, 580, 200, 25);
+        fill(215, 219, 221);
+        //rect(30, 680, 500, 50, 25);
+        fill(0, 0, 0);
+        textSize(20);
+        // text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
+        if (parar==false && t1!=0) {
+          calcWave3();
+          fill(66, 73, 73);
+          rect(602, 630, 580, 2);
+          rect(600, 540, 2, 170);
+        }
+        renderWave3();
       }
     }
   }
 }
 
 void keyPressed() {
-  //--------------------esto es para iniciar la pantalla de carga o de inico--------------------
-  if (key==ENTER && una_sola_vez==0) {
-    etapa=1; // cambiar el 4 por el 1
-    una_sola_vez=1;
-  }
-
-
   //---------------------para ingresar los datos del tiempo ------------------------------------
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux==true && aux==true && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
     t=t+key;
@@ -593,7 +728,7 @@ void keyPressed() {
 
 
   //---------------------para ingresar los datos de la amplitud ------------------------------------
-  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
+  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     amplitud=amplitud+key;
     conteo=amplitud.length();
     if (conteo>20) {
@@ -605,7 +740,7 @@ void keyPressed() {
 
 
   //---------------------para ingresar los datos del frecuencia ------------------------------------
-  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
+  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     frecuencia=frecuencia+key;
     conteo=frecuencia.length();
     if (conteo>17) {
@@ -617,7 +752,7 @@ void keyPressed() {
 
 
   //---------------------para ingresar los datos de la fase inicial ------------------------------------
-  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
+  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     fase_inicial=fase_inicial+key;
     conteo=fase_inicial.length();
     if (conteo>18) {
@@ -645,7 +780,7 @@ void keyPressed() {
 
 
   //---------------------para ingresar los datos de la constante de elasticidad ------------------------------------
-  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && caso=="sistema amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
+  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && caso=="sistema amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     elasticidad=elasticidad+key;
     conteo=elasticidad.length();
     if (conteo>17) {
@@ -657,7 +792,7 @@ void keyPressed() {
 
 
   //---------------------para ingresar los datos de la constante de amortiguamineto ------------------------------------
-  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && caso=="sistema amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
+  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && caso=="sistema amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     amortiguamiento=amortiguamiento+key;
     conteo=amortiguamiento.length();
     if (conteo>18) {
@@ -668,7 +803,7 @@ void keyPressed() {
   }
 
   //---------------------para ingresar los datos de la amplitud ------------------------------------
-  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && aux3==false && aux2==false && aux==false && aux6==true && caso=="sistema amortiguado" && aux4==false && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
+  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && aux3==false && aux2==false && aux==false && aux6==true && caso=="sistema amortiguado" && aux4==false && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     amplitud=amplitud+key;
     conteo=amplitud.length();
     if (conteo>18) {
@@ -680,7 +815,7 @@ void keyPressed() {
 
 
   //---------------------para ingresar los datos del angulo de fase ------------------------------------
-  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux5==true && aux3==false && aux2==false && aux==false && aux5==true && caso=="sistema amortiguado" && aux4==false && aux6==false && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
+  if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux5==true && aux3==false && aux2==false && aux==false && aux5==true && caso=="sistema amortiguado" && aux4==false && aux6==false && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     angulo_de_fase=angulo_de_fase+key;
     conteo=angulo_de_fase.length();
     if (conteo>18) {
@@ -826,6 +961,11 @@ void mouseClicked() {
     etapa=4;
   }
 
+  //sistema amortiguado acpetar de la etapa 3
+  if (mouseX>250 && mouseX<950 && mouseY>500 && mouseY<600 && etapa==3 && caso=="sistema amortiguado") {
+    etapa=4;
+  }
+
   //-----------------------------------------sistema amortiguado-----------------------------------------------------------------
 
   // ------------------- los controles para el menu de la masa----------------------
@@ -930,6 +1070,21 @@ void mouseClicked() {
       aux5=true;
     }
   }
+  // ------------------- los controles para el inicio del programa----------------------
+  if (mouseX>250 && mouseX<950 && mouseY>450 && mouseY<520 && una_sola_vez==0 && etapa==0) {
+    etapa=1; // cambiar el 4 por el 1
+    una_sola_vez=1;
+  }
+
+  // ------------------- los controles para ir a las instrucciones----------------------
+  if (mouseX>250 && mouseX<950 && mouseY>650 && mouseY<700 && etapa==0) {
+    etapa=10;
+  }
+
+  // ------------------- los controles para salir del programa----------------------
+  if (mouseX>250 && mouseX<950 && mouseY>630 && mouseY<700 && etapa==0) {
+    exit();
+  }
 }
 
 //la grafica de p vs t
@@ -940,7 +1095,14 @@ void calcWave() {
   // For every x value, calculate a y value with sine function
   float x = theta;
   for (int i = 0; i < yvalues.length; i++) {
-    yvalues[i] = sin(x)*amplitude;
+
+    if (condicion==2) {
+      amplitude=300;
+      yvalues[i] = (sin(x)-100)/x;
+    } else {
+      yvalues[i] = sin(x)*amplitude;
+    }
+
     x+=dx;
   }
 }
@@ -950,8 +1112,11 @@ void renderWave() {
   fill(255);
   // A simple way to draw the wave with an ellipse at each location
   for (int x = 0; x < yvalues.length; x++) {
-
-    ellipse(605+x*xspacing, 120+yvalues[x], 10, 10);
+    if (condicion==2) {
+      ellipse(605+x*xspacing, 200+yvalues[x], 5, 10);
+    } else {
+      ellipse(605+x*xspacing, 120+yvalues[x], 5, 10);
+    }
   }
 }
 
@@ -978,8 +1143,7 @@ void renderWave2() {
   fill(255);
   // A simple way to draw the wave with an ellipse at each location
   for (int x = 0; x < yvalues2.length; x++) {
-
-    ellipse(605+x*xspacing2, 380+yvalues2[x], 10, 10);
+    ellipse(605+x*xspacing2, 380+yvalues2[x], 5, 10);
   }
 }
 
@@ -1003,8 +1167,7 @@ void renderWave3() {
   fill(255);
   // A simple way to draw the wave with an ellipse at each location
   for (int x = 0; x < yvalues3.length; x++) {
-
-    ellipse(605+x*xspacing3, 600+yvalues3[x], 10, 10);
+    ellipse(605+x*xspacing3, 600+yvalues3[x], 5, 10);
   }
 }
 //prueba para git xd
