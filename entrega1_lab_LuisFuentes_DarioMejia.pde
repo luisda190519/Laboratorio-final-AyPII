@@ -1,11 +1,11 @@
 import ddf.minim.*;
-PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19,img20;
-int valor=2, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3;
+PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25;
+int valor=2, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3,instrucciones_una_vez=0;
 String caso="sistema amortiguado", t="", amplitud="", frecuencia="", fase_inicial="", pfinal="", vfinal="", tfinal="", masa="", elasticidad="", amortiguamiento="", caso_amortiguado="", angulo_de_fase="";
 boolean mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=false, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false;
 float o, f, a, t1, n2=1, presion_final, volumen_final, temperatura_final, x1, v, a1, t2, x2, x3, m, b1, k, resultado, resultado2, o1, max=450, min=100;
 float posicionx, posiciony;
-float y=300, vel=3, cambio=vel;
+float y=300, vel=3, cambio=vel, exponente, base;
 ;
 float pos1[]=new float[1000];
 float vel1[]=new float[1000];
@@ -13,35 +13,35 @@ float ace1[]=new float[1000];
 
 
 
-int xspacing = 1;   // How far apart should each horizontal location be spaced
-int w;              // Width of entire wave
+int xspacing = 1;   
+int w;              
 
-float theta = 0.0;  // Start angle at 0
-float amplitude=75.0;  // Height of wave
-float period = 400.0;  // How many pixels before the wave repeats
-float dx;  // Value for incrementing X, a function of period and xspacing
-float[] yvalues;  // Using an array to store height values for the wave
+float theta = 0.0;  
+float amplitude=75.0;  
+float period = 400.0;  
+float dx;  
+float[] yvalues;  
 
 //--------------------------------------------------------------------------------------------------
-int xspacing2 = 1;   // How far apart should each horizontal location be spaced
-int w2;              // Width of entire wave
+int xspacing2 = 1;   
+int w2;              
 
-float theta2 = 0.0;  // Start angle at 0
-float amplitude2 = 75.0;  // Height of wave
-float period2 = 500.0;  // How many pixels before the wave repeats
-float dx2;  // Value for incrementing X, a function of period and xspacing
-float[] yvalues2;  // Using an array to store height values for the wave
+float theta2 = 0.0;  
+float amplitude2 = 75.0;  
+float period2 = 300.0;  
+float dx2;  
+float[] yvalues2;  
 
 
 //---------------------------------------------------------------------------------------------------
-int xspacing3 = 1;   // How far apart should each horizontal location be spaced
-int w3;              // Width of entire wave
+int xspacing3 = 1;   
+int w3;              
 
-float theta3 = 0.0;  // Start angle at 0
-float amplitude3 = 75.0;  // Height of wave
-float period3 = 500.0;  // How many pixels before the wave repeats
-float dx3;  // Value for incrementing X, a function of period and xspacing
-float[] yvalues3;  // Using an array to store height values for the wave
+float theta3 = 0.0;  
+float amplitude3 = 75.0;  
+float period3 = 500.0;  
+float dx3;  
+float[] yvalues3;  
 
 Minim audio;
 AudioPlayer reproducir;
@@ -75,6 +75,11 @@ void setup() {
   img18=loadImage("menu.png");
   img19=loadImage("cientifico.png");
   img20=loadImage("atras.png");
+  img21=loadImage("adelante.png");
+  img22=loadImage("instruccion1.png");
+  img23=loadImage("instruccion2.png");
+  img24=loadImage("instruccion3.png");
+  img25=loadImage("instruccion4.png");
   audio=new Minim(this);
   reproducir=audio.loadFile("audio1.mp3");
   boton=audio.loadFile("audio2.mp3");
@@ -86,7 +91,7 @@ void setup() {
   dx2 = (TWO_PI / period2) * xspacing2;
 
   w3 = 500;
-  dx3 = (TWO_PI / period) * xspacing;
+  dx3 = (TWO_PI / period) * xspacing3;
 }
 
 
@@ -209,7 +214,7 @@ void draw() {
     } else if (caso=="sistema amortiguado") {
       background(25, 25, 25);
       image(img, 0, 0);
-      image(img19, 50, 5, 500, 400);
+      image(img19, 80, 2, 500, 400);
 
       //--------------------menu del timepo en sistema amortiguado-----------------------------  
       fill(215, 219, 221);
@@ -342,7 +347,7 @@ void draw() {
       resultado=(k/m)-((b1*b1)/4*m*m);
       resultado2=2*sqrt(k*m);
       f=sqrt((k/m)-((b1*b1)/4*m*m));
-      x1=pow((a*2.718), -(b1/2*m)*t1)*cos(f*t1+o1);
+
 
 
       if (resultado==0 || resultado2==b1) {
@@ -358,7 +363,7 @@ void draw() {
       }
 
       caso_amortiguado="amortiguamiento critico"; //quita estas lineas de codigo
-      condicion=2; // quita esta linea de codigo vro
+      condicion=3; // quita esta linea de codigo vro
 
       image(img, 0, 0);
       fill(27, 38, 49);
@@ -545,6 +550,13 @@ void draw() {
       //calculo el tiempo por cada draw   
       if (contador==60) {
         cont=cont+1;
+
+        if (condicion==1 || condicion==3) {
+          exponente=-(b1/(2*m))*cont;
+          base=(a*2.718);
+          pos1[cont]=pow(base, exponente)*cos(f*cont+o1);
+        }
+
         if (cont!=t1) {
           contador=0;
         }
@@ -708,8 +720,105 @@ void draw() {
           rect(600, 540, 2, 170);
         }
         renderWave3();
+      } else if (condicion==1) {
+        //--------------cambios de velocidad--------------------------
+        if (y>max) {
+          cambio=vel;
+
+          if (vel>0) {
+            vel=vel-0.075;
+          }
+
+          if (max!=300) {
+            max=max-5;
+          }
+        }
+        if (y<min) {
+          cambio=-vel;
+        }
+        //grafia de posicion
+        yvalues = new float[w/xspacing];
+        fill(255, 255, 255);
+        text("P vs T", 630, 25);
+        fill(215, 219, 221);
+        rect(600, 30, 580, 200, 25);
+        noStroke();
+        fill(215, 219, 221);
+        // rect(30, 560, 500, 50, 25);
+        textSize(20);
+        fill(0, 0, 0);
+        //text("posicion: "+pos1[cont]+" m", 50, 590);    
+        if (parar==false && t1!=0) {
+          calcWave();
+          fill(66, 73, 73);
+          rect(602, 120, 580, 2);
+          rect(600, 45, 2, 170);
+          if (amplitude>15) {
+            amplitude=amplitude-0.25;
+          }
+        }
+        renderWave();
+
+        //grafia de velocidad vs tiempo
+        yvalues2 = new float[w2/xspacing2];
+        noStroke();
+        fill(255, 255, 255);
+        text("V vs T", 630, 270);
+        fill(215, 219, 221);
+        rect(600, 280, 580, 200, 25);
+        fill(215, 219, 221);
+        //rect(30, 620, 500, 50, 25);
+        fill(0, 0, 0);
+        textSize(20);
+        //text("velocidad: "+vel1[cont]+" m/s", 50, 650);
+        if (parar==false && t1!=0) {
+          calcWave2();
+          fill(66, 73, 73);
+          rect(602, 380, 580, 2);
+          rect(600, 290, 2, 170);
+        }
+        renderWave2();
+
+        //grafica de aceleracion
+        yvalues3 = new float[w3/xspacing3];
+        noStroke();
+        fill(255, 255, 255);
+        text("A vs T", 630, 520);
+        fill(215, 219, 221);
+        rect(600, 530, 580, 200, 25);
+        fill(215, 219, 221);
+        //rect(30, 680, 500, 50, 25);
+        fill(0, 0, 0);
+        textSize(20);
+        // text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
+        if (parar==false && t1!=0) {
+          calcWave3();
+          fill(66, 73, 73);
+          rect(602, 630, 580, 2);
+          rect(600, 540, 2, 170);
+        }
+        renderWave3();
       }
     }
+  } else if (etapa==10) {
+    image(img22, 0, 0);
+    image(img21, 1000, 50, 100, 100);
+  } else if (etapa==11) {
+    image(img23, 0, 0);
+    image(img20, 100, 50, 100, 100);
+    image(img21, 1000, 50, 100, 100);
+    instrucciones_una_vez=0;
+  } else if (etapa==12) {
+    image(img24, 0, 0);
+    image(img20, 100, 50, 100, 100);
+    image(img21, 1000, 50, 100, 100);
+    instrucciones_una_vez=0;
+  } else if (etapa==13) {
+    image(img25, 0, 0);
+    image(img20, 100, 50, 100, 100);
+    image(img5, 350, 600, 500, 100);
+    text("finalizar", 510, 670);
+    
   }
 }
 
@@ -1077,7 +1186,7 @@ void mouseClicked() {
   }
 
   // ------------------- los controles para ir a las instrucciones----------------------
-  if (mouseX>250 && mouseX<950 && mouseY>650 && mouseY<700 && etapa==0) {
+  if (mouseX>250 && mouseX<950 && mouseY>540 && mouseY<610 && etapa==0) {
     etapa=10;
   }
 
@@ -1085,14 +1194,45 @@ void mouseClicked() {
   if (mouseX>250 && mouseX<950 && mouseY>630 && mouseY<700 && etapa==0) {
     exit();
   }
+  
+  // ------------------- los controles para las instrucciones----------------------
+  if (mouseX>1000 && mouseX<1100 && mouseY>50 && mouseY<150 && etapa==10) {
+    etapa=11;
+    instrucciones_una_vez=1;
+  }
+  
+  if (mouseX>1000 && mouseX<1100 && mouseY>50 && mouseY<150 && etapa==11 && instrucciones_una_vez==0) {
+    etapa=12;
+    instrucciones_una_vez=1;
+  }
+  if (mouseX>100 && mouseX<200 && mouseY>50 && mouseY<150 && etapa==11) {
+    etapa=10;
+  }
+  
+  if (mouseX>1000 && mouseX<1100 && mouseY>50 && mouseY<150 && etapa==12 && instrucciones_una_vez==0) {
+    etapa=13;
+    instrucciones_una_vez=1;
+  }
+  if (mouseX>100 && mouseX<200 && mouseY>50 && mouseY<150 && etapa==12) {
+    etapa=11;
+  }
+  if (mouseX>100 && mouseX<200 && mouseY>50 && mouseY<150 && etapa==13) {
+    etapa=12;
+  }
+  if (mouseX>350 && mouseX<850 && mouseY>600 && mouseY<700 && etapa==13) {
+    etapa=1;
+  }
+  
+  
+  
 }
 
 //la grafica de p vs t
 void calcWave() {
-  // Increment theta (try different values for 'angular velocity' here
+  
   theta += 0.02;
 
-  // For every x value, calculate a y value with sine function
+ 
   float x = theta;
   for (int i = 0; i < yvalues.length; i++) {
 
@@ -1110,7 +1250,7 @@ void calcWave() {
 void renderWave() {
   noStroke();
   fill(255);
-  // A simple way to draw the wave with an ellipse at each location
+  
   for (int x = 0; x < yvalues.length; x++) {
     if (condicion==2) {
       ellipse(605+x*xspacing, 200+yvalues[x], 5, 10);
@@ -1127,10 +1267,10 @@ void renderWave() {
 
 //grafica de v vs t
 void calcWave2() {
-  // Increment theta (try different values for 'angular velocity' here
+ 
   theta2 += 0.02;
 
-  // For every x value, calculate a y value with sine function
+  
   float x2 = theta2;
   for (int i = 0; i < yvalues2.length; i++) {
     yvalues2[i] = sin(x2)*20;
@@ -1141,7 +1281,7 @@ void calcWave2() {
 void renderWave2() {
   noStroke();
   fill(255);
-  // A simple way to draw the wave with an ellipse at each location
+ 
   for (int x = 0; x < yvalues2.length; x++) {
     ellipse(605+x*xspacing2, 380+yvalues2[x], 5, 10);
   }
@@ -1151,10 +1291,10 @@ void renderWave2() {
 
 //graficar a vs t
 void calcWave3() {
-  // Increment theta (try different values for 'angular velocity' here
+
   theta3 += 0.02;
 
-  // For every x value, calculate a y value with sine function
+  
   float x3 = theta3;
   for (int i = 0; i < yvalues3.length; i++) {
     yvalues3[i] = sin(x3);
@@ -1165,9 +1305,8 @@ void calcWave3() {
 void renderWave3() {
   noStroke();
   fill(255);
-  // A simple way to draw the wave with an ellipse at each location
+ 
   for (int x = 0; x < yvalues3.length; x++) {
     ellipse(605+x*xspacing3, 600+yvalues3[x], 5, 10);
   }
 }
-//prueba para git xd
