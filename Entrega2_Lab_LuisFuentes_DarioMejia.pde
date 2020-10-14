@@ -1,47 +1,22 @@
 import ddf.minim.*;
-PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25;
-int valor=2, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3, instrucciones_una_vez=0;
+import grafica.*;
+PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26, img27;
+int valor=2, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3, instrucciones_una_vez=0, grafica=0;
 String caso="sistema amortiguado", t="", amplitud="", frecuencia="", fase_inicial="", pfinal="", vfinal="", tfinal="", masa="", elasticidad="", amortiguamiento="", caso_amortiguado="", angulo_de_fase="";
-boolean mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=false, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false;
+boolean mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=false, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false, gra=false, gra2=false, gra3=false;
 float o, f, a, t1, n2=1, presion_final, volumen_final, temperatura_final, x1, v, a1, t2, x2, x3, m, b1, k, resultado, resultado2, o1, max=450, min=100;
 float posicionx, posiciony;
 float y=300, vel=3, cambio=vel, exponente, base;
-;
+
 float pos1[]=new float[1000];
 float vel1[]=new float[1000];
 float ace1[]=new float[1000];
+GPlot plot, plot2, plot3;
 
+GPointsArray myArray = new GPointsArray(0);
+GPointsArray myArray2 = new GPointsArray(0);
+GPointsArray myArray3 = new GPointsArray(0);
 
-
-int xspacing = 1;   
-int w;              
-
-float theta = 0.0;  
-float amplitude=75.0;  
-float period = 400.0;  
-float dx;  
-float[] yvalues;  
-
-//--------------------------------------------------------------------------------------------------
-int xspacing2 = 1;   
-int w2;              
-
-float theta2 = 0.0;  
-float amplitude2 = 75.0;  
-float period2 = 300.0;  
-float dx2;  
-float[] yvalues2;  
-
-
-//---------------------------------------------------------------------------------------------------
-int xspacing3 = 1;   
-int w3;              
-
-float theta3 = 0.0;  
-float amplitude3 = 75.0;  
-float period3 = 500.0;  
-float dx3;  
-float[] yvalues3;  
 
 Minim audio;
 AudioPlayer reproducir;
@@ -80,18 +55,16 @@ void setup() {
   img23=loadImage("instruccion2.png");
   img24=loadImage("instruccion3.png");
   img25=loadImage("instruccion4.png");
+  img26=loadImage("derecha.png");
+  img27=loadImage("izquierda.png");
   audio=new Minim(this);
   reproducir=audio.loadFile("audio1.mp3");
   boton=audio.loadFile("audio2.mp3");
 
-  w = 500;
-  dx = (TWO_PI / period) * xspacing;
 
-  w2 = 500;
-  dx2 = (TWO_PI / period2) * xspacing2;
-
-  w3 = 500;
-  dx3 = (TWO_PI / period) * xspacing3;
+  plot = new GPlot(this, 600, 30, 580, 200);
+  plot2 = new GPlot(this, 600, 280, 580, 200);
+  plot3 = new GPlot(this, 600, 530, 580, 200);
 }
 
 
@@ -388,6 +361,9 @@ void draw() {
   //--------------etapa 4 de la simulacion------------------
   else if (etapa==4) {
     background(133, 193, 233);
+    plot.setTitleText("P vs T");
+    plot2.setTitleText("V vs T");
+    plot3.setTitleText("A vs T");
 
     if (caso=="sistema no amortiguado") {
       image(img14, 0, 0);
@@ -407,6 +383,7 @@ void draw() {
         textSize(20);
         fill(255, 255, 255);
         text("tiempo: "+t1, 120, 60);
+        etapa=5;
       } else if (cont!=t1 && parar==false) {
         y=y-cambio;
         textSize(20);
@@ -442,23 +419,21 @@ void draw() {
 
         ace1[cont]=sin(f*cont+o);
         ace1[cont]=ace1[cont]*f*f*-a;
+
+        myArray.add(cont, pos1[cont]);
+        myArray2.add(cont, vel1[cont]);
+        myArray3.add(cont, ace1[cont]);
       }
       textSize(20);
       fill(255, 255, 255);
 
 
-      x1=sin(f*t1+o);
-      x1=x1*a;
-      v=cos(f*t1+o);
-      v=v*a*f;
-      a1=sin(f*t1+o);
-      a1=a1*f*f*-a;
+
 
       if (posicion==true) {
 
-        yvalues = new float[w/xspacing];
         fill(255, 255, 255);
-        text("P vs T", 630, 25);
+        plot.setTitleText("P vs T");
         fill(215, 219, 221);
         rect(600, 30, 580, 200, 25);
         noStroke();
@@ -468,21 +443,15 @@ void draw() {
         fill(0, 0, 0);
 
         text("posicion: "+pos1[cont]+" m", 50, 590);    
-        if (parar==false && t1!=0) {
-          calcWave();
-          fill(66, 73, 73);
-          rect(602, 120, 580, 2);
-          rect(600, 45, 2, 170);
-        }
-        renderWave();
+        plot.setPoints(myArray);
+        plot.defaultDraw();
       }
 
       if (velocidad==true) {
 
-        yvalues2 = new float[w2/xspacing2];
         noStroke();
         fill(255, 255, 255);
-        text("V vs T", 630, 270);
+        plot2.setTitleText("V vs T");
         fill(215, 219, 221);
         rect(600, 280, 580, 200, 25);
         fill(215, 219, 221);
@@ -490,20 +459,14 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         text("velocidad: "+vel1[cont]+" m/s", 50, 650);
-        if (parar==false && t1!=0) {
-          calcWave2();
-          fill(66, 73, 73);
-          rect(602, 380, 580, 2);
-          rect(600, 290, 2, 170);
-        }
-        renderWave2();
+        plot2.setPoints(myArray2);
+        plot2.defaultDraw();
       }
       if (aceleracion==true) {
 
-        yvalues3 = new float[w3/xspacing3];
         noStroke();
         fill(255, 255, 255);
-        text("A vs T", 630, 520);
+        plot3.setTitleText("A vs T");
         fill(215, 219, 221);
         rect(600, 530, 580, 200, 25);
         fill(215, 219, 221);
@@ -511,17 +474,14 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
-        if (parar==false && t1!=0) {
-          calcWave3();
-          fill(66, 73, 73);
-          rect(602, 630, 580, 2);
-          rect(600, 540, 2, 170);
-        }
-
-        renderWave3();
+        plot3.setPoints(myArray3);
+        plot3.defaultDraw();
       }
     } else if (caso=="sistema amortiguado") {
 
+      plot.setTitleText("P vs T");
+      plot2.setTitleText("V vs T");
+      plot3.setTitleText("A vs T");
       image(img14, 0, 0);
       image(img17, -10, 500, 400, 200);
       image(img15, 100, 30, 150, 50);
@@ -581,7 +541,6 @@ void draw() {
           cambio=-vel;
         }
         //grafia de posicion
-        yvalues = new float[w/xspacing];
         fill(255, 255, 255);
         text("P vs T", 630, 25);
         fill(215, 219, 221);
@@ -592,19 +551,12 @@ void draw() {
         textSize(20);
         fill(0, 0, 0);
         //text("posicion: "+pos1[cont]+" m", 50, 590);    
-        if (parar==false) {
-          calcWave();
-          fill(66, 73, 73);
-          rect(602, 120, 580, 2);
-          rect(600, 45, 2, 170);
-          if (amplitude>15) {
-            amplitude=amplitude-0.25;
-          }
-        }
-        renderWave();
+        plot.setPoints(myArray);
+        plot.defaultDraw();
+
+
 
         //grafia de velocidad vs tiempo
-        yvalues2 = new float[w2/xspacing2];
         noStroke();
         fill(255, 255, 255);
         text("V vs T", 630, 270);
@@ -615,16 +567,12 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         //text("velocidad: "+vel1[cont]+" m/s", 50, 650);
-        if (parar==false && t1!=0) {
-          calcWave2();
-          fill(66, 73, 73);
-          rect(602, 380, 580, 2);
-          rect(600, 290, 2, 170);
-        }
-        renderWave2();
+        plot2.setPoints(myArray2);
+        plot2.defaultDraw();
+
+
 
         //grafica de aceleracion
-        yvalues3 = new float[w3/xspacing3];
         noStroke();
         fill(255, 255, 255);
         text("A vs T", 630, 520);
@@ -635,13 +583,8 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         // text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
-        if (parar==false && t1!=0) {
-          calcWave3();
-          fill(66, 73, 73);
-          rect(602, 630, 580, 2);
-          rect(600, 540, 2, 170);
-        }
-        renderWave3();
+        plot3.setPoints(myArray3);
+        plot3.defaultDraw();
       } else if (condicion==2) {
         //--------------cambios de velocidad--------------------------
         if (y>max) {
@@ -659,7 +602,6 @@ void draw() {
           cambio=-vel;
         }
         //grafia de posicion
-        yvalues = new float[w/xspacing];
         fill(255, 255, 255);
         text("P vs T", 630, 25);
         fill(215, 219, 221);
@@ -670,19 +612,11 @@ void draw() {
         textSize(20);
         fill(0, 0, 0);
         //text("posicion: "+pos1[cont]+" m", 50, 590);    
-        if (parar==false && t1!=0) {
-          calcWave();
-          fill(66, 73, 73);
-          rect(602, 120, 580, 2);
-          rect(600, 45, 2, 170);
-          if (amplitude>15) {
-            amplitude=amplitude-0.25;
-          }
-        }
-        renderWave();
+        plot.setPoints(myArray);
+        plot.defaultDraw();
+
 
         //grafia de velocidad vs tiempo
-        yvalues2 = new float[w2/xspacing2];
         noStroke();
         fill(255, 255, 255);
         text("V vs T", 630, 270);
@@ -693,16 +627,11 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         //text("velocidad: "+vel1[cont]+" m/s", 50, 650);
-        if (parar==false && t1!=0) {
-          calcWave2();
-          fill(66, 73, 73);
-          rect(602, 380, 580, 2);
-          rect(600, 290, 2, 170);
-        }
-        renderWave2();
+        plot2.setPoints(myArray2);
+        plot2.defaultDraw();
+
 
         //grafica de aceleracion
-        yvalues3 = new float[w3/xspacing3];
         noStroke();
         fill(255, 255, 255);
         text("A vs T", 630, 520);
@@ -713,13 +642,8 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         // text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
-        if (parar==false && t1!=0) {
-          calcWave3();
-          fill(66, 73, 73);
-          rect(602, 630, 580, 2);
-          rect(600, 540, 2, 170);
-        }
-        renderWave3();
+        plot3.setPoints(myArray3);
+        plot3.defaultDraw();
       } else if (condicion==1) {
         //--------------cambios de velocidad--------------------------
         if (y>max) {
@@ -736,8 +660,8 @@ void draw() {
         if (y<min) {
           cambio=-vel;
         }
+
         //grafia de posicion
-        yvalues = new float[w/xspacing];
         fill(255, 255, 255);
         text("P vs T", 630, 25);
         fill(215, 219, 221);
@@ -748,19 +672,11 @@ void draw() {
         textSize(20);
         fill(0, 0, 0);
         //text("posicion: "+pos1[cont]+" m", 50, 590);    
-        if (parar==false && t1!=0) {
-          calcWave();
-          fill(66, 73, 73);
-          rect(602, 120, 580, 2);
-          rect(600, 45, 2, 170);
-          if (amplitude>15) {
-            amplitude=amplitude-0.25;
-          }
-        }
-        renderWave();
+        plot.setPoints(myArray);
+        plot.defaultDraw();
+
 
         //grafia de velocidad vs tiempo
-        yvalues2 = new float[w2/xspacing2];
         noStroke();
         fill(255, 255, 255);
         text("V vs T", 630, 270);
@@ -771,16 +687,11 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         //text("velocidad: "+vel1[cont]+" m/s", 50, 650);
-        if (parar==false && t1!=0) {
-          calcWave2();
-          fill(66, 73, 73);
-          rect(602, 380, 580, 2);
-          rect(600, 290, 2, 170);
-        }
-        renderWave2();
+        plot2.setPoints(myArray2);
+        plot2.defaultDraw();
+
 
         //grafica de aceleracion
-        yvalues3 = new float[w3/xspacing3];
         noStroke();
         fill(255, 255, 255);
         text("A vs T", 630, 520);
@@ -791,13 +702,8 @@ void draw() {
         fill(0, 0, 0);
         textSize(20);
         // text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
-        if (parar==false && t1!=0) {
-          calcWave3();
-          fill(66, 73, 73);
-          rect(602, 630, 580, 2);
-          rect(600, 540, 2, 170);
-        }
-        renderWave3();
+        plot3.setPoints(myArray3);
+        plot3.defaultDraw();
       }
     }
   } else if (etapa==10) {
@@ -818,6 +724,30 @@ void draw() {
     image(img20, 100, 50, 100, 100);
     image(img5, 350, 600, 500, 100);
     text("finalizar", 510, 670);
+  } else if (etapa==5) {
+    image(img2, 0, 0);
+
+
+    if (grafica==1) {
+      plot = new GPlot(this, 150, 80, 900, 600);
+      plot.setTitleText("P vs T");
+      plot.setPoints(myArray);
+      plot.defaultDraw();
+    } else if (grafica==2) {
+      plot2 = new GPlot(this, 150, 80, 900, 600);
+      plot2.setTitleText("V vs T");
+      plot2.setPoints(myArray2);
+      plot2.defaultDraw();
+    } else if (grafica==3) {
+      plot3 = new GPlot(this, 150, 80, 900, 600);
+      plot3.setTitleText("A vs T");
+      plot3.setPoints(myArray3);
+      plot3.defaultDraw();
+    }
+
+
+    image(img26, 1070, 300, 100, 100);
+    image(img27, 30, 300, 100, 100);
   }
 }
 
@@ -940,7 +870,7 @@ void keyPressed() {
 
 void mouseClicked() {
   //-------------controles para el menu de las transformaciones del resorte----------------
-  if (mouseX>900 && mouseX<1000 && mouseY>300 && mouseY<400 && valor<4 && etapa==1) {
+  if (mouseX>900 && mouseX<1000 && mouseY>300 && mouseY<400 && valor<2 && etapa==1) {
     valor=valor+1;
   }
 
@@ -1053,16 +983,19 @@ void mouseClicked() {
   if (mouseX>700 && mouseX<780 && mouseY>190 && mouseY<270 && etapa==3 && aux_etapa31==true) {
     posicion=true;
     aux_etapa31=false;
+    grafica=1;
   }
 
   if (mouseX>700 && mouseX<780 && mouseY>340 && mouseY<420 && etapa==3 && aux_etapa32==true) {
     velocidad=true;
     aux_etapa32=false;
+    grafica=1;
   }
 
   if (mouseX>700 && mouseX<780 && mouseY>490 && mouseY<570 && etapa==3 && aux_etapa33==true) {
     aceleracion=true;
     aux_etapa33=false;
+    grafica=1;
   }
 
   if (mouseX>250 && mouseX<950 && mouseY>600 && mouseY<700 && etapa==3 && (aceleracion==true || posicion==true || velocidad==true)) {
@@ -1221,88 +1154,12 @@ void mouseClicked() {
   if (mouseX>350 && mouseX<850 && mouseY>600 && mouseY<700 && etapa==13) {
     etapa=1;
   }
-}
 
-//la grafica de p vs t
-void calcWave() {
-
-  theta += 0.02;
-
-
-  float x = theta;
-  for (int i = 0; i < yvalues.length; i++) {
-
-    if (condicion==2) {
-      amplitude=300;
-      yvalues[i] = (sin(x)-100)/x;
-    } else {
-      yvalues[i] = sin(x)*amplitude;
-    }
-
-    x+=dx;
+  //-----------------------graficas de la etapa 4--------------------------------------- 
+  if (mouseX>1070 && mouseX<1170 && mouseY>300 && mouseY<400 && etapa==5 && grafica>=1 && grafica<=2) {
+    grafica=grafica+1;
   }
-}
-
-void renderWave() {
-  noStroke();
-  fill(255);
-
-  for (int x = 0; x < yvalues.length; x++) {
-    if (condicion==2) {
-      ellipse(605+x*xspacing, 200+yvalues[x], 5, 10);
-    } else {
-      ellipse(605+x*xspacing, 120+yvalues[x], 5, 10);
-    }
-  }
-}
-
-
-
-
-
-
-//grafica de v vs t
-void calcWave2() {
-
-  theta2 += 0.02;
-
-
-  float x2 = theta2;
-  for (int i = 0; i < yvalues2.length; i++) {
-    yvalues2[i] = sin(x2)*20;
-    x2+=dx2;
-  }
-}
-
-void renderWave2() {
-  noStroke();
-  fill(255);
-
-  for (int x = 0; x < yvalues2.length; x++) {
-    ellipse(605+x*xspacing2, 380+yvalues2[x], 5, 10);
-  }
-}
-
-
-
-//graficar a vs t
-void calcWave3() {
-
-  theta3 += 0.02;
-
-
-  float x3 = theta3;
-  for (int i = 0; i < yvalues3.length; i++) {
-    yvalues3[i] = sin(x3);
-    x3+=dx3;
-  }
-}
-
-void renderWave3() {
-  noStroke();
-  fill(255);
-
-  for (int x = 0; x < yvalues3.length; x++) {
-    ellipse(605+x*xspacing3, 600+yvalues3[x], 5, 10);
+  if (mouseX>30 && mouseX<130 && mouseY>300 && mouseY<400 && etapa==5 && grafica<=3 && grafica>=2) {
+    grafica=grafica-1;
   }
 }
