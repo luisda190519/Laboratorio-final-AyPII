@@ -3,7 +3,7 @@ import grafica.*;
 PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26, img27, img28;
 int valor=1, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3, instrucciones_una_vez=0, grafica=0;
 String caso="sistema no amortiguado", t="", amplitud="", frecuencia="", fase_inicial="", pfinal="", vfinal="", tfinal="", masa="", elasticidad="", amortiguamiento="", caso_amortiguado="", angulo_de_fase="";
-boolean  mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=true, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false, gra=false, gra2=false, gra3=false, screenshot=false;
+boolean  kol=true,mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=true, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false, gra=false, gra2=false, gra3=false, screenshot=false;
 ;
 float f_inicial, o, f, a, t1, n2=1, presion_final, volumen_final, temperatura_final, x1, v, a1, t2, x2, x3, m, b1, k, resultado, resultado2, o1, max=450, min=100;
 float posicionx, posiciony;
@@ -740,11 +740,12 @@ void draw() {
   } else if (etapa==5) {
     image(img2, 0, 0);
 
-    if (caso=="sistema amortiguado") {
+    if (caso=="sistema amortiguado" && kol==true) {
       gra=true;
       gra2=true;
       gra3=true;
       grafica=1;
+      kol=false;
     }
 
     if (grafica==1 && gra==true) {
