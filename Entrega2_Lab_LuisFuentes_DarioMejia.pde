@@ -1,9 +1,10 @@
 import ddf.minim.*;
 import grafica.*;
 PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26, img27, img28;
-int valor=2, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3, instrucciones_una_vez=0, grafica=0;
-String caso="sistema amortiguado", t="", amplitud="", frecuencia="", fase_inicial="", pfinal="", vfinal="", tfinal="", masa="", elasticidad="", amortiguamiento="", caso_amortiguado="", angulo_de_fase="";
-boolean  mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=false, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false, gra=false, gra2=false, gra3=false,screenshot=false;;
+int valor=1, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3, instrucciones_una_vez=0, grafica=0;
+String caso="sistema no amortiguado", t="", amplitud="", frecuencia="", fase_inicial="", pfinal="", vfinal="", tfinal="", masa="", elasticidad="", amortiguamiento="", caso_amortiguado="", angulo_de_fase="";
+boolean  mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=true, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false, gra=false, gra2=false, gra3=false, screenshot=false;
+;
 float f_inicial, o, f, a, t1, n2=1, presion_final, volumen_final, temperatura_final, x1, v, a1, t2, x2, x3, m, b1, k, resultado, resultado2, o1, max=450, min=100;
 float posicionx, posiciony;
 float y=300, vel=3, cambio=vel, exponente, base, y1=0;
@@ -97,7 +98,7 @@ void draw() {
     image(img5, 250, 630, 700, 70);
     text("Salir", 550, 680);
     image(img18, 150, 50, 900, 300);
-    text("osciladores",470,220);
+    text("osciladores", 470, 220);
   }
 
   //-------------------------------segunda etapa donde se pide el caso que se va a trabajr-------------------------
@@ -517,18 +518,20 @@ void draw() {
         }
         amplitud1[0]=a;
         f_inicial=sqrt(k/m);
-        
+
         pos1[0]=amplitud1[0]*sin(o1);
         vel1[0]=amplitud1[0]*y1*sin(o1)+amplitud1[cont-1]*f*cos(o1);
         amplitud1[cont]=sqrt((pos1[0]*pos1[0])+pow((vel1[0]+y1*pos1[0])/o1, 2));
         pos1[cont]=amplitud1[cont]*exp(-y1*cont)*sin(f*cont+o1);
         vel1[cont]=-y*exp(-y1*cont)*sin(f*cont+o1)+amplitud1[cont]*exp(-y1*cont)*f*cos(f*cont+o1);
-        
+
         f=sqrt(pow(f_inicial, 2)-pow(y1, 2));
         y1=b1/(2*m);
 
+        if (vel1[cont]==0) {
+          parar=true;
+        }
 
-        
 
 
 
@@ -562,20 +565,10 @@ void draw() {
         rect(600, 30, 580, 200, 25);
         noStroke();
         fill(215, 219, 221);
-        // rect(30, 560, 500, 50, 25);
-        textSize(20);
+        rect(270, 80, 320, 50, 25);
         fill(0, 0, 0);
-
-        text(amplitud1[0], 50, 100);
-        text( f_inicial, 50, 200);
-        text(pos1[0], 50, 300);
-        text( vel1[0], 50, 400);
-        text(amplitud1[cont], 50, 500);
-        text(pos1[cont], 50, 600);
-        text(f, 50, 650);
-        text(y1, 50, 700);
-
-
+        textSize(20);
+        text("Pos: "+pos1[cont]+" m", 275, 110);
         plot.setPoints(myArray);
         plot.defaultDraw();
 
@@ -587,10 +580,13 @@ void draw() {
         fill(215, 219, 221);
         rect(600, 280, 580, 200, 25);
         fill(215, 219, 221);
-        //rect(30, 620, 500, 50, 25);
         fill(0, 0, 0);
         textSize(20);
-        //text("velocidad: "+vel1[cont]+" m/s", 50, 650);
+        fill(215, 219, 221);
+        rect(270, 150, 320, 50, 25);
+        fill(0, 0, 0);
+        textSize(20);
+        text("Vel: "+vel1[cont]+" m/s", 275, 180);
         plot2.setPoints(myArray2);
         plot2.defaultDraw();
 
@@ -743,63 +739,88 @@ void draw() {
     text("finalizar", 510, 670);
   } else if (etapa==5) {
     image(img2, 0, 0);
-  
-  if(caso=="sistema amortiguado"){
-    gra=true;
-    gra2=true;
-    gra3=true;
-    grafica=1;
-  }
+
+    if (caso=="sistema amortiguado") {
+      gra=true;
+      gra2=true;
+      gra3=true;
+      grafica=1;
+    }
 
     if (grafica==1 && gra==true) {
       plot = new GPlot(this, 150, 80, 900, 600);
       plot.setTitleText("P vs T");
       plot.setPoints(myArray);
       plot.defaultDraw();
-      plot.activatePanning();
     } else if (grafica==2 && gra2==true) {
       plot2 = new GPlot(this, 150, 80, 900, 600);
       plot2.setTitleText("V vs T");
       plot2.setPoints(myArray2);
       plot2.defaultDraw();
-      plot2.activatePanning();
     } else if (grafica==3 && gra3==true) {
       plot3 = new GPlot(this, 150, 80, 900, 600);
       plot3.setTitleText("A vs T");
       plot3.setPoints(myArray3);
       plot3.defaultDraw();
-      plot3.activatePanning();
     }
-    
-    
+
+
     //-----------guardar las imagenes de las graficas--------------
-    if(screenshot==true && grafica==1){
-    plot = new GPlot(this, 0, 0, 1200, 750);
-    plot.setPoints(myArray);
-    plot.defaultDraw();
-    save("sistema no amortiguado/P vs T.jpg");
-    plot = new GPlot(this, 150, 80, 900, 600);
-    screenshot=false;
-  }
-  
-     if(screenshot==true && grafica==2){
-    plot2 = new GPlot(this, 0, 0, 1200, 750);
-    plot2.setPoints(myArray);
-    plot2.defaultDraw();
-    save("sistema no amortiguado/V vs T.jpg");
-    plot2 = new GPlot(this, 150, 80, 900, 600);
-    screenshot=false;
-  }
-  
-     if(screenshot==true && grafica==3){
-    plot3 = new GPlot(this, 0, 0, 1200, 750);
-    plot3.setPoints(myArray);
-    plot3.defaultDraw();
-    save("sistema no amortiguado/A vs T.jpg");
-    plot3 = new GPlot(this, 150, 80, 900, 600);
-    screenshot=false;
-  }
-    
+    if (screenshot==true && grafica==1 && caso=="sistema no amortiguado") {
+      plot = new GPlot(this, 0, 0, 1200, 750);
+      plot.setPoints(myArray);
+      plot.defaultDraw();
+      save("sistema no amortiguado/P vs T.jpg");
+      plot = new GPlot(this, 150, 80, 900, 600);
+      screenshot=false;
+    }
+
+    if (screenshot==true && grafica==2 && caso=="sistema no amortiguado") {
+      plot2 = new GPlot(this, 0, 0, 1200, 750);
+      plot2.setPoints(myArray);
+      plot2.defaultDraw();
+      save("sistema no amortiguado/V vs T.jpg");
+      plot2 = new GPlot(this, 150, 80, 900, 600);
+      screenshot=false;
+    }
+
+    if (screenshot==true && grafica==3 && caso=="sistema no amortiguado") {
+      plot3 = new GPlot(this, 0, 0, 1200, 750);
+      plot3.setPoints(myArray);
+      plot3.defaultDraw();
+      save("sistema no amortiguado/A vs T.jpg");
+      plot3 = new GPlot(this, 150, 80, 900, 600);
+      screenshot=false;
+    }
+
+    //-----------------grafica de sistema amortiguado------------------------------- 
+    if (screenshot==true && grafica==1 && caso=="sistema amortiguado") {
+      plot = new GPlot(this, 0, 0, 1200, 750);
+      plot.setPoints(myArray);
+      plot.defaultDraw();
+      save("sistema amortiguado/P vs T.jpg");
+      plot = new GPlot(this, 150, 80, 900, 600);
+      screenshot=false;
+    }
+
+    if (screenshot==true && grafica==2 && caso=="sistema amortiguado") {
+      plot2 = new GPlot(this, 0, 0, 1200, 750);
+      plot2.setPoints(myArray);
+      plot2.defaultDraw();
+      save("sistema amortiguado/V vs T.jpg");
+      plot2 = new GPlot(this, 150, 80, 900, 600);
+      screenshot=false;
+    }
+
+    if (screenshot==true && grafica==3 && caso=="sistema amortiguado") {
+      plot3 = new GPlot(this, 0, 0, 1200, 750);
+      plot3.setPoints(myArray);
+      plot3.defaultDraw();
+      save("sistema amortiguado/A vs T.jpg");
+      plot3 = new GPlot(this, 150, 80, 900, 600);
+      screenshot=false;
+    }
+
 
     image(img26, 1070, 300, 100, 100);
     image(img27, 30, 300, 100, 100);
@@ -1224,6 +1245,6 @@ void mouseClicked() {
 
   //----------------------------boton de descarga-----------------------------------
   if (mouseX>1000 && mouseX<1045 && mouseY>82 && mouseY<127 && etapa==5) {
-     screenshot=true;
+    screenshot=true;
   }
 }
