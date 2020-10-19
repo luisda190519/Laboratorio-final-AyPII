@@ -531,13 +531,13 @@ void draw() {
         newRow.setFloat("posicion", pos1[cont]);
         newRow.setFloat("tiempo", cont);
 
-        TableRow newRow2 = table.addRow();
-        newRow2.setFloat("posicion", vel1[cont]);
+        TableRow newRow2 = table2.addRow();
+        newRow2.setFloat("Velocidad", vel1[cont]);
         newRow2.setFloat("tiempo", cont);
 
 
-        TableRow newRow3 = table.addRow();
-        newRow3.setFloat("posicion", ace1[cont]);
+        TableRow newRow3 = table3.addRow();
+        newRow3.setFloat("Aceleracion", ace1[cont]);
         newRow3.setFloat("tiempo", cont);
       }
       textSize(20);
