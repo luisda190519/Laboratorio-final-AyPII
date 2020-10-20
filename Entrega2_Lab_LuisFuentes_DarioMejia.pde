@@ -152,232 +152,73 @@ void draw() {
       background(25, 25, 25);
       image(img, 0, 0);
 
-      //------------creacion del menu de tiempo------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 18, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Tiempo", 830, 40);
-      textSize(20);
-      image(img7, 1080, 80, 50, 50);
-      image(img8, 650, 80, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 80, 350, 50);
-      fill(0, 0, 0);
-      text(t, 750, 110);
+      //------------creacion del menu de tiempo------------------      
+      menus(600,18,"tiempo",830,40,1080,80,650,80,715,80,750,110,t,170);
 
 
-      //-----------------creacion del menu de la amplitud--------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 208, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Amplitud", 830, 230);
-      textSize(20);
-      image(img7, 1080, 270, 50, 50);
-      image(img8, 650, 270, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 270, 350, 50);
-      fill(0, 0, 0);
-      text(amplitud, 750, 300);
+      //-----------------creacion del menu de la amplitud--------------------      
+      menus(600,208,"amplitud",830,230,1080,270,650,270,715,270,750,300,amplitud,170);
 
 
       //-------------------creacion del menu de la frecuencia--------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 398, 580, 170, 25);
-      fill(0, 0, 0);
-      text("frecuencia", 830, 420);
-      textSize(20);
-      image(img7, 1080, 460, 50, 50);
-      image(img8, 650, 460, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 460, 350, 50);
-      fill(0, 0, 0);
-      text(frecuencia, 750, 490);
+      menus(600,398,"frecuencia",830,420,1080,460,650,460,715,460,750,490,frecuencia,170);
 
 
 
       //------------------------------creacion del menu de la fase inicial --------------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 588, 580, 150, 25);
-      fill(0, 0, 0);
-      text("Fase inicial", 830, 610);
-      textSize(20);
-      image(img7, 1080, 650, 50, 50);
-      image(img8, 650, 650, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 650, 350, 50);
-      fill(0, 0, 0);
-      text(fase_inicial, 750, 680);
+      menus(600,588,"Fase inicial",830,610,1080,650,650,650,715,650,750,680,fase_inicial,150);
+      
+      
     } else if (caso=="sistema amortiguado") {
       background(25, 25, 25);
       image(img29, 0, 0);
 
-      //--------------------menu del timepo en sistema amortiguado-----------------------------  
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 18, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Tiempo", 830, 50);
-      textSize(20);
-      image(img7, 1080, 80, 50, 50);
-      image(img8, 650, 80, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 80, 350, 50);
-      fill(0, 0, 0);
-      text(t, 750, 110);
+      //--------------------menu del timepo en sistema amortiguado-----------------------------        
+      menus(600,18,"Tiempo",830,50,1080,80,650,80,715,80,750,110,t,170);
 
-      //---------------------------menu de la masa -----------------------------------------------  
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 208, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Masa", 830, 250);
-      textSize(20);
-      image(img7, 1080, 270, 50, 50);
-      image(img8, 650, 270, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 270, 350, 50);
-      fill(0, 0, 0);
-      text(masa, 750, 300); 
+      //---------------------------menu de la masa -----------------------------------------------       
+      menus(600,208,"Masa",830,250,1080,270,650,270,715,270,750,300,masa,170);
 
 
-      //---------------------------------menu de la constante de elasticidada-------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 398, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Constante de elasticidad", 770, 435);
-      textSize(20);
-      image(img7, 1080, 460, 50, 50);
-      image(img8, 650, 460, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 460, 350, 50);
-      fill(0, 0, 0);
-      text(elasticidad, 750, 490);
+      //---------------------------------menu de la constante de elasticidada-------------------------      
+      menus(600,398,"Constante de elasticidad",770,435,1080,460,650,460,715,460,750,490,elasticidad,170);
 
 
-      //-----------------------------menu de la constante de amortiguamiento--------------------------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 588, 580, 150, 25);
-      fill(0, 0, 0);
-      text("Constante de amortiguamiento", 750, 630);
-      textSize(20);
-      image(img7, 1080, 650, 50, 50);
-      image(img8, 650, 650, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 650, 350, 50);
-      fill(0, 0, 0);
-      text(amortiguamiento, 750, 680);  
+      //-----------------------------menu de la constante de amortiguamiento--------------------------------------------      
+      menus(600,588,"Constante de amortiguamiento",750,630,1080,650,650,650,715,650,750,680,amortiguamiento,150);
 
 
-      //-----------------------------menu del angulo de fase--------------------------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(10, 588, 580, 150, 25);
-      fill(0, 0, 0);
-      text("Angulo de fase", 200, 630);
-      textSize(20);
-      image(img7, 480, 650, 50, 50);
-      image(img8, 50, 650, 50, 50);
-      fill(255, 255, 255);
-      rect(120, 650, 350, 50);
-      fill(0, 0, 0);
-      text(angulo_de_fase, 135, 680);  
+      //-----------------------------menu del angulo de fase--------------------------------------------      
+      menus(10,588,"Angulo de fase",200,630,480,650,50,650,120,650,135,680,angulo_de_fase,150);
 
-      //---------------------------------menu de la amplitud-------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(10, 398, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Amplitud inicial", 200, 435);
-      textSize(20);
-      image(img7, 480, 460, 50, 50);
-      image(img8, 50, 460, 50, 50);
-      fill(255, 255, 255);
-      rect(120, 460, 350, 50);
-      fill(0, 0, 0);
-      text(amplitud, 135, 490);
+      //---------------------------------menu de la amplitud-------------------------      
+      menus(10,398,"Amplitud inicial",200,435,480,460,50,460,120,460,135,490,amplitud,170);
+      
+      
     }
     //---------------- menu de oscilaciones forzadas--------------------------- 
     else if (caso=="oscilaciones forzadas") {
       image(img29, 0, 0);
 
-      //--------------------menu del timepo en sistema amortiguado-----------------------------  
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 18, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Tiempo", 830, 50);
-      textSize(20);
-      image(img7, 1080, 80, 50, 50);
-      image(img8, 650, 80, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 80, 350, 50);
-      fill(0, 0, 0);
-      text(t, 750, 110);
+      //--------------------menu del timepo en sistema amortiguado-----------------------------        
+      menus(600,18,"Tiempo",830,50,1080,80,650,80,715,80,750,110,t,170);
 
-      //---------------------------menu de la masa -----------------------------------------------  
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 208, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Masa", 830, 250);
-      textSize(20);
-      image(img7, 1080, 270, 50, 50);
-      image(img8, 650, 270, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 270, 350, 50);
-      fill(0, 0, 0);
-      text(masa, 750, 300); 
+      //---------------------------menu de la masa -----------------------------------------------        
+      menus(600,208,"Masa",830,250,1080,270,650,270,715,270,750,300,masa,170);
 
 
-      //---------------------------------menu de la constante de elasticidada-------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 398, 580, 170, 25);
-      fill(0, 0, 0);
-      text("Constante de elasticidad", 770, 435);
-      textSize(20);
-      image(img7, 1080, 460, 50, 50);
-      image(img8, 650, 460, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 460, 350, 50);
-      fill(0, 0, 0);
-      text(elasticidad, 750, 490);
+      //---------------------------------menu de la constante de elasticidada-------------------------      
+      menus(600,398,"Constante de elasticidad",770,435,1080,460,650,460,715,460,750,490,elasticidad,170);
 
 
-      //-----------------------------menu de la constante de amortiguamiento--------------------------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(600, 588, 580, 150, 25);
-      fill(0, 0, 0);
-      text("Constante de amortiguamiento", 750, 630);
-      textSize(20);
-      image(img7, 1080, 650, 50, 50);
-      image(img8, 650, 650, 50, 50);
-      fill(255, 255, 255);
-      rect(715, 650, 350, 50);
-      fill(0, 0, 0);
-      text(amortiguamiento, 750, 680);  
+      //-----------------------------menu de la constante de amortiguamiento--------------------------------------------      
+      menus(600,588,"Constante de amortiguamiento",750,630,1080,650,650,650,715,650,750,680,amortiguamiento,150);
 
 
-      //-----------------------------menu del angulo de fase--------------------------------------------
-      fill(215, 219, 221);
-      noStroke();
-      rect(10, 588, 580, 150, 25);
-      fill(0, 0, 0);
-      text("Frecuencia angular", 200, 630);
-      textSize(20);
-      image(img7, 480, 650, 50, 50);
-      image(img8, 50, 650, 50, 50);
-      fill(255, 255, 255);
-      rect(120, 650, 350, 50);
-      fill(0, 0, 0);
-      text(frecuencia, 135, 680);
+      //-----------------------------menu del angulo de fase--------------------------------------------      
+      menus(10,588,"Frecuencia angular",200,630,480,650,50,650,120,650,135,680,frecuencia,150);
+      
+      
     }
   }
 
@@ -672,13 +513,13 @@ void draw() {
         newRow.setFloat("posicion", pos1[cont]);
         newRow.setFloat("tiempo", cont);
 
-        TableRow newRow2 = table.addRow();
-        newRow2.setFloat("posicion", vel1[cont]);
+        TableRow newRow2 = table2.addRow();
+        newRow2.setFloat("Velocidad", vel1[cont]);
         newRow2.setFloat("tiempo", cont);
 
 
-        TableRow newRow3 = table.addRow();
-        newRow3.setFloat("posicion", ace1[cont]);
+        TableRow newRow3 = table3.addRow();
+        newRow3.setFloat("Aceleracion", ace1[cont]);
         newRow3.setFloat("tiempo", cont);
       }
 
@@ -887,7 +728,7 @@ void draw() {
 
         pos1[cont]=c1*cos(f_inicial*cont)+d1*sin(f_inicial*cont)+(f_angular)/ (m*(pow(f_inicial, 2)-pow(f, 2)))*cos(f*cont);
         vel1[cont]=f_inicial*(-c1*sin(f_inicial*cont)+d1*cos(f_inicial*cont))-(f_angular*f)/(m*(pow(f_inicial, 2)-pow(f, 2)))*sin(f*cont);
-
+        ace1[cont]=-c1*pow(f_inicial, 2)*cos(f_inicial*cont)-d1*pow(f_inicial, 2)*sin(f_inicial*cont)-(f_angular*pow(f, 2)*cos(cont*f))/(m*pow(f_inicial, 2)-m*pow(f, 2));
 
         if (round(vel1[cont])==0 &&  round(vel1[cont-1])==0  &&  round(vel1[cont-2])==0 &&  round(vel1[cont-3])==0&& cont>3) {
           parar=true;
@@ -901,13 +742,13 @@ void draw() {
         newRow.setFloat("posicion", pos1[cont]);
         newRow.setFloat("tiempo", cont);
 
-        TableRow newRow2 = table.addRow();
-        newRow2.setFloat("posicion", vel1[cont]);
+        TableRow newRow2 = table2.addRow();
+        newRow2.setFloat("Velocidad", vel1[cont]);
         newRow2.setFloat("tiempo", cont);
 
 
-        TableRow newRow3 = table.addRow();
-        newRow3.setFloat("posicion", ace1[cont]);
+        TableRow newRow3 = table3.addRow();
+        newRow3.setFloat("Aceleracion", ace1[cont]);
         newRow3.setFloat("tiempo", cont);
       }
 
@@ -1572,4 +1413,22 @@ void mouseClicked() {
   if (mouseX>1000 && mouseX<1045 && mouseY>82 && mouseY<127 && etapa==5) {
     screenshot=true;
   }
+}
+
+
+public void menus(int posx, int posy, String titulo, int posxx, int posyy,int posxxx,int posyyy,int posxxxx,int posyyyy,int posicionx,int posiciony,int posicionxx,int posicionyy, String variable, int otra) {
+
+  fill(215, 219, 221);
+  noStroke();
+  rect(posx, posy, 580, otra, 25);
+  fill(0, 0, 0);
+  text(titulo, posxx, posyy);
+  textSize(20);
+  image(img7, posxxx, posyyy, 50, 50);
+  image(img8, posxxxx, posyyyy, 50, 50);
+  fill(255, 255, 255);
+  rect(posicionx, posiciony, 350, 50);
+  fill(0, 0, 0);
+  text(variable, posicionxx, posicionyy);
+  
 }
