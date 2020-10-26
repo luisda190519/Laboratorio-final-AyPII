@@ -34,39 +34,39 @@ double x, abajo, c, b, arriba, seno, cos;
 void setup() {
   //cargar todas las imagenes
   size(1200, 750);
-  img=loadImage("fondo2.png");
-  img2=loadImage("fondo1.png");
-  img3=loadImage("flecha.png");
-  img4=loadImage("flecha2.png");
-  img5=loadImage("start.png");
-  img6=loadImage("resorte.png");  
-  img7=loadImage("clear.png");  
-  img8=loadImage("chulo.png");  
-  img9=loadImage("fondo3.png"); 
-  img10=loadImage("audioon.png"); 
-  img11=loadImage("audiooff.png"); 
-  img12=loadImage("aceptar.png"); 
-  img13=loadImage("cancelar.png");
-  img14=loadImage("lab.png");
-  img15=loadImage("cuadrado.png");
-  img16=loadImage("resorte.png");
-  img17=loadImage("agua.png");
-  img18=loadImage("menu.png");
-  img19=loadImage("cientifico.png");
-  img20=loadImage("atras.png");
-  img21=loadImage("adelante.png");
-  img22=loadImage("instruccion1.png");
-  img23=loadImage("instruccion2.png");
-  img24=loadImage("instruccion3.png");
-  img25=loadImage("instruccion4.png");
-  img26=loadImage("derecha.png");
-  img27=loadImage("izquierda.png");
-  img28=loadImage("descargar.png");
-  img29=loadImage("fondo_amortiguado.png");
-  img30=loadImage("exel.png");
+  img=loadImage("imagenes/fondo2.png");
+  img2=loadImage("imagenes/fondo1.png");
+  img3=loadImage("imagenes/flecha.png");
+  img4=loadImage("imagenes/flecha2.png");
+  img5=loadImage("imagenes/start.png");
+  img6=loadImage("imagenes/resorte.png");  
+  img7=loadImage("imagenes/clear.png");  
+  img8=loadImage("imagenes/chulo.png");  
+  img9=loadImage("imagenes/fondo3.png"); 
+  img10=loadImage("imagenes/audioon.png"); 
+  img11=loadImage("imagenes/audiooff.png"); 
+  img12=loadImage("imagenes/aceptar.png"); 
+  img13=loadImage("imagenes/cancelar.png");
+  img14=loadImage("imagenes/lab.png");
+  img15=loadImage("imagenes/cuadrado.png");
+  img16=loadImage("imagenes/resorte.png");
+  img17=loadImage("imagenes/agua.png");
+  img18=loadImage("imagenes/menu.png");
+  img19=loadImage("imagenes/cientifico.png");
+  img20=loadImage("imagenes/atras.png");
+  img21=loadImage("imagenes/adelante.png");
+  img22=loadImage("imagenes/instruccion1.png");
+  img23=loadImage("imagenes/instruccion2.png");
+  img24=loadImage("imagenes/instruccion3.png");
+  img25=loadImage("imagenes/instruccion4.png");
+  img26=loadImage("imagenes/derecha.png");
+  img27=loadImage("imagenes/izquierda.png");
+  img28=loadImage("imagenes/descargar.png");
+  img29=loadImage("imagenes/fondo_amortiguado.png");
+  img30=loadImage("imagenes/exel.png");
   audio=new Minim(this);
-  reproducir=audio.loadFile("audio1.mp3");
-  boton=audio.loadFile("audio2.mp3");
+  reproducir=audio.loadFile("audio/audio1.mp3");
+  boton=audio.loadFile("audio/audio2.mp3");
 
 
   plot = new GPlot(this, 600, 30, 580, 200);
@@ -224,39 +224,7 @@ void draw() {
   else if (etapa==3) {
 
     if (caso=="sistema no amortiguado") {
-      image(img, 0, 0);
-      fill(27, 38, 49);
-      noStroke();
-      rect(80, 30, 1050, 700, 25);
-
-      textSize(50);
-      fill(255, 255, 255);
-      text("¿que desea calcular?", 335, 100);
-      fill(215, 219, 221);
-      rect(250, 180, 700, 100, 25);          
-      rect(250, 330, 700, 100, 25);
-      rect(250, 480, 700, 100, 25);
-
-      fill(255, 255, 255);
-      textSize(40);
-      text("posicion", 335, 240);
-      text("velocidad", 335, 390);
-      text("aceleracion", 335, 540);
-
-      image(img5, 250, 600, 700, 100);
-      text("continuar", 500, 660);
-
-      if (aux_etapa31==true) {
-        image(img12, 700, 190, 80, 80);
-      }
-
-      if (aux_etapa32==true) {
-        image(img12, 700, 340, 80, 80);
-      }
-
-      if (aux_etapa33==true) { 
-        image(img12, 700, 490, 80, 80);
-      }
+      etapa=4;
     } else if (caso=="sistema amortiguado") {
       background(0, 0, 0);
       resultado=(k/m)-((b1*b1)/4*m*m);
@@ -275,8 +243,7 @@ void draw() {
         condicion=3;
       }
 
-      //caso_amortiguado="subamortiguamiento"; //quita estas lineas de codigo
-      //condicion=3; // quita esta linea de codigo vro
+
 
       image(img, 0, 0);
       fill(27, 38, 49);
@@ -371,53 +338,52 @@ void draw() {
 
 
 
-      if (posicion==true) {
+      //----------------grafica de posicion vs tiempo-----------------------------------      
 
-        fill(255, 255, 255);
-        plot.setTitleText("P vs T");
-        fill(215, 219, 221);
-        rect(600, 30, 580, 200, 25);
-        noStroke();
-        fill(215, 219, 221);
-        rect(30, 560, 500, 50, 25);
-        textSize(20);
-        fill(0, 0, 0);
+      fill(255, 255, 255);
+      plot.setTitleText("P vs T");
+      fill(215, 219, 221);
+      rect(600, 30, 580, 200, 25);
+      noStroke();
+      fill(215, 219, 221);
+      rect(30, 560, 500, 50, 25);
+      textSize(20);
+      fill(0, 0, 0);
 
-        text("posicion: "+pos1[cont]+" m", 50, 590);    
-        plot.setPoints(myArray);
-        plot.defaultDraw();
-      }
+      text("posicion: "+pos1[cont]+" m", 50, 590);    
+      plot.setPoints(myArray);
+      plot.defaultDraw();
 
-      if (velocidad==true) {
 
-        noStroke();
-        fill(255, 255, 255);
-        plot2.setTitleText("V vs T");
-        fill(215, 219, 221);
-        rect(600, 280, 580, 200, 25);
-        fill(215, 219, 221);
-        rect(30, 620, 500, 50, 25);
-        fill(0, 0, 0);
-        textSize(20);
-        text("velocidad: "+vel1[cont]+" m/s", 50, 650);
-        plot2.setPoints(myArray2);
-        plot2.defaultDraw();
-      }
-      if (aceleracion==true) {
 
-        noStroke();
-        fill(255, 255, 255);
-        plot3.setTitleText("A vs T");
-        fill(215, 219, 221);
-        rect(600, 530, 580, 200, 25);
-        fill(215, 219, 221);
-        rect(30, 680, 500, 50, 25);
-        fill(0, 0, 0);
-        textSize(20);
-        text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
-        plot3.setPoints(myArray3);
-        plot3.defaultDraw();
-      }
+      //----------------grafica de velocidad vs tiempo-----------------------------------
+      noStroke();
+      fill(255, 255, 255);
+      plot2.setTitleText("V vs T");
+      fill(215, 219, 221);
+      rect(600, 280, 580, 200, 25);
+      fill(215, 219, 221);
+      rect(30, 620, 500, 50, 25);
+      fill(0, 0, 0);
+      textSize(20);
+      text("velocidad: "+vel1[cont]+" m/s", 50, 650);
+      plot2.setPoints(myArray2);
+      plot2.defaultDraw();
+
+
+      //----------------grafica de aceleracion vs tiempo-----------------------------------
+      noStroke();
+      fill(255, 255, 255);
+      plot3.setTitleText("A vs T");
+      fill(215, 219, 221);
+      rect(600, 530, 580, 200, 25);
+      fill(215, 219, 221);
+      rect(30, 680, 500, 50, 25);
+      fill(0, 0, 0);
+      textSize(20);
+      text("aceleracion: "+ace1[cont]+" m/s^2", 50, 710);
+      plot3.setPoints(myArray3);
+      plot3.defaultDraw();
     } else if (caso=="sistema amortiguado") {
 
       plot.setTitleText("P vs T");
@@ -773,15 +739,8 @@ void draw() {
   } else if (etapa==5) {
     image(img2, 0, 0);
 
-    if (caso=="sistema amortiguado" && kol==true) {
-      gra=true;
-      gra2=true;
-      gra3=true;
-      grafica=1;
-      kol=false;
-    }
 
-    if (caso=="oscilaciones forzadas" && kol==true) {
+    if ((caso=="oscilaciones forzadas" || caso=="sistema amortiguado" || caso=="sistema no amortiguado")&& kol==true) {
       gra=true;
       gra2=true;
       gra3=true;
@@ -870,7 +829,6 @@ void keyPressed() {
 
   //---------------------para ingresar los datos de la amplitud ------------------------------------
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
-    amplitud=amplitud+key;
     amplitud=amplitud+key;
     conteo=amplitud.length();
     if (conteo>10) {
