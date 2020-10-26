@@ -1,11 +1,11 @@
 import ddf.minim.*;
 import grafica.*;
 PImage img, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26, img27, img28, img29, img30;
-int valor=1, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3, instrucciones_una_vez=0, grafica=0;
+int t1, valor=1, etapa=0, una_sola_vez=0, cont, co=0, presionx=0, presionxd=0, contador=0, conteo=0, condicion=3, instrucciones_una_vez=0, grafica=0;
 String caso="sistema no amortiguado", t="", amplitud="", frecuencia="", fase_inicial="", pfinal="", vfinal="", tfinal="", masa="", elasticidad="", amortiguamiento="", caso_amortiguado="", angulo_de_fase="";
 boolean  kol=true, mm=true, aux=true, aux2=true, aux3=true, aux4=true, aux5=true, aux6=true, aux7=false, musica=false, presionar, aux_etapa31=true, aux_etapa32=true, aux_etapa33=true, posicion=false, velocidad=false, aceleracion=false, aux_posicion=true, parar=false, gra=false, gra2=false, gra3=false, screenshot=false;
 
-float bb, f_inicial, o, f, a, t1, n2=1, presion_final, volumen_final, temperatura_final, x1, v, a1, t2, x2, x3, m, b1, k, resultado, resultado2, o1, max=450, min=100, f_angular, c1, d1, e1, f1;
+float bb, f_inicial, o, f, a, n2=1, presion_final, volumen_final, temperatura_final, x1, v, a1, t2, x2, x3, m, b1, k, resultado, resultado2, o1, max=450, min=100, f_angular, c1, d1, e1, f1;
 float posicionx, posiciony;
 float y=300, vel=3, cambio=vel, exponente, base, y1=0;
 
@@ -25,6 +25,7 @@ Minim audio;
 AudioPlayer reproducir;
 AudioPlayer boton;  
 
+PFont font;
 
 int n, menos, funcion;
 double x, abajo, c, b, arriba, seno, cos;
@@ -90,6 +91,9 @@ void setup() {
     vel1[i]=10;
     ace1[i]=10;
   }
+
+  font=loadFont("BookmanOldStyle-Italic-40.vlw");
+  textFont(font);
 }
 
 
@@ -153,72 +157,66 @@ void draw() {
       image(img, 0, 0);
 
       //------------creacion del menu de tiempo------------------      
-      menus(600,18,"tiempo",830,40,1080,80,650,80,715,80,750,110,t,170);
+      menus(600, 18, "tiempo", 830, 40, 1080, 80, 650, 80, 715, 80, 750, 110, t, 170);
 
 
       //-----------------creacion del menu de la amplitud--------------------      
-      menus(600,208,"amplitud",830,230,1080,270,650,270,715,270,750,300,amplitud,170);
+      menus(600, 208, "amplitud", 830, 230, 1080, 270, 650, 270, 715, 270, 750, 300, amplitud, 170);
 
 
       //-------------------creacion del menu de la frecuencia--------------------
-      menus(600,398,"frecuencia",830,420,1080,460,650,460,715,460,750,490,frecuencia,170);
+      menus(600, 398, "frecuencia", 830, 420, 1080, 460, 650, 460, 715, 460, 750, 490, frecuencia, 170);
 
 
 
       //------------------------------creacion del menu de la fase inicial --------------------------------
-      menus(600,588,"Fase inicial",830,610,1080,650,650,650,715,650,750,680,fase_inicial,150);
-      
-      
+      menus(600, 588, "Fase inicial", 830, 610, 1080, 650, 650, 650, 715, 650, 750, 680, fase_inicial, 150);
     } else if (caso=="sistema amortiguado") {
       background(25, 25, 25);
-      image(img29, 0, 0);
+      image(img, 0, 0);
 
       //--------------------menu del timepo en sistema amortiguado-----------------------------        
-      menus(600,18,"Tiempo",830,50,1080,80,650,80,715,80,750,110,t,170);
+      menus(600, 18, "Tiempo", 830, 50, 1080, 80, 650, 80, 715, 80, 750, 110, t, 170);
 
       //---------------------------menu de la masa -----------------------------------------------       
-      menus(600,208,"Masa",830,250,1080,270,650,270,715,270,750,300,masa,170);
+      menus(600, 208, "Masa", 830, 250, 1080, 270, 650, 270, 715, 270, 750, 300, masa, 170);
 
 
       //---------------------------------menu de la constante de elasticidada-------------------------      
-      menus(600,398,"Constante de elasticidad",770,435,1080,460,650,460,715,460,750,490,elasticidad,170);
+      menus(600, 398, "Constante de elasticidad", 770, 435, 1080, 460, 650, 460, 715, 460, 750, 490, elasticidad, 170);
 
 
       //-----------------------------menu de la constante de amortiguamiento--------------------------------------------      
-      menus(600,588,"Constante de amortiguamiento",750,630,1080,650,650,650,715,650,750,680,amortiguamiento,150);
+      menus(600, 588, "Constante de amortiguamiento", 750, 630, 1080, 650, 650, 650, 715, 650, 750, 680, amortiguamiento, 150);
 
 
       //-----------------------------menu del angulo de fase--------------------------------------------      
-      menus(10,588,"Angulo de fase",200,630,480,650,50,650,120,650,135,680,angulo_de_fase,150);
+      menus(10, 588, "Angulo de fase", 200, 630, 480, 650, 50, 650, 120, 650, 135, 680, angulo_de_fase, 150);
 
       //---------------------------------menu de la amplitud-------------------------      
-      menus(10,398,"Amplitud inicial",200,435,480,460,50,460,120,460,135,490,amplitud,170);
-      
-      
+      menus(10, 398, "Amplitud inicial", 200, 435, 480, 460, 50, 460, 120, 460, 135, 490, amplitud, 170);
     }
     //---------------- menu de oscilaciones forzadas--------------------------- 
     else if (caso=="oscilaciones forzadas") {
-      image(img29, 0, 0);
+      image(img, 0, 0);
 
       //--------------------menu del timepo en sistema amortiguado-----------------------------        
-      menus(600,18,"Tiempo",830,50,1080,80,650,80,715,80,750,110,t,170);
+      menus(600, 18, "Tiempo", 830, 50, 1080, 80, 650, 80, 715, 80, 750, 110, t, 170);
 
       //---------------------------menu de la masa -----------------------------------------------        
-      menus(600,208,"Masa",830,250,1080,270,650,270,715,270,750,300,masa,170);
+      menus(600, 208, "Masa", 830, 250, 1080, 270, 650, 270, 715, 270, 750, 300, masa, 170);
 
 
       //---------------------------------menu de la constante de elasticidada-------------------------      
-      menus(600,398,"Constante de elasticidad",770,435,1080,460,650,460,715,460,750,490,elasticidad,170);
+      menus(600, 398, "Constante de elasticidad", 770, 435, 1080, 460, 650, 460, 715, 460, 750, 490, elasticidad, 170);
 
 
       //-----------------------------menu de la constante de amortiguamiento--------------------------------------------      
-      menus(600,588,"Constante de amortiguamiento",750,630,1080,650,650,650,715,650,750,680,amortiguamiento,150);
+      menus(600, 588, "Constante de amortiguamiento", 750, 630, 1080, 650, 650, 650, 715, 650, 750, 680, amortiguamiento, 150);
 
 
       //-----------------------------menu del angulo de fase--------------------------------------------      
-      menus(10,588,"Frecuencia angular",200,630,480,650,50,650,120,650,135,680,frecuencia,150);
-      
-      
+      menus(10, 588, "Frecuencia angular", 200, 630, 480, 650, 50, 650, 120, 650, 135, 680, frecuencia, 150);
     }
   }
 
@@ -364,22 +362,8 @@ void draw() {
         ace1[cont]=sin(f*cont+o);
         ace1[cont]=ace1[cont]*f*f*-a;
 
-        myArray.add(cont, pos1[cont]);
-        myArray2.add(cont, vel1[cont]);
-        myArray3.add(cont, ace1[cont]);
 
-        TableRow newRow = table.addRow();
-        newRow.setFloat("posicion", pos1[cont]);
-        newRow.setFloat("tiempo", cont);
-
-        TableRow newRow2 = table2.addRow();
-        newRow2.setFloat("Velocidad", vel1[cont]);
-        newRow2.setFloat("tiempo", cont);
-
-
-        TableRow newRow3 = table3.addRow();
-        newRow3.setFloat("Aceleracion", ace1[cont]);
-        newRow3.setFloat("tiempo", cont);
+        graficas();
       }
       textSize(20);
       fill(255, 255, 255);
@@ -501,26 +485,7 @@ void draw() {
           parar=true;
         }
 
-
-
-
-        myArray.add(cont, pos1[cont]);
-        myArray2.add(cont, vel1[cont]);
-        myArray3.add(cont, ace1[cont]);
-
-
-        TableRow newRow = table.addRow();
-        newRow.setFloat("posicion", pos1[cont]);
-        newRow.setFloat("tiempo", cont);
-
-        TableRow newRow2 = table2.addRow();
-        newRow2.setFloat("Velocidad", vel1[cont]);
-        newRow2.setFloat("tiempo", cont);
-
-
-        TableRow newRow3 = table3.addRow();
-        newRow3.setFloat("Aceleracion", ace1[cont]);
-        newRow3.setFloat("tiempo", cont);
+        graficas();
       }
 
 
@@ -734,22 +699,7 @@ void draw() {
           parar=true;
         }
 
-        myArray.add(cont, pos1[cont]);
-        myArray2.add(cont, vel1[cont]);
-        myArray3.add(cont, ace1[cont]);
-
-        TableRow newRow = table.addRow();
-        newRow.setFloat("posicion", pos1[cont]);
-        newRow.setFloat("tiempo", cont);
-
-        TableRow newRow2 = table2.addRow();
-        newRow2.setFloat("Velocidad", vel1[cont]);
-        newRow2.setFloat("tiempo", cont);
-
-
-        TableRow newRow3 = table3.addRow();
-        newRow3.setFloat("Aceleracion", ace1[cont]);
-        newRow3.setFloat("tiempo", cont);
+        graficas();
       }
 
       //--------------cambios de velocidad--------------------------
@@ -859,96 +809,42 @@ void draw() {
 
 
     //-----------guardar las imagenes de las graficas--------------
-    if (screenshot==true && grafica==1 && caso=="sistema no amortiguado") {
-      plot = new GPlot(this, 0, 0, 1200, 750);
-      plot.setPoints(myArray);
-      plot.defaultDraw();
-      save("sistema no amortiguado/P vs T.jpg");
-      saveTable(table, "datos sistema no amortiguado/P vs T.csv");
-      plot = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+    if (screenshot==true && grafica==1 && caso=="sistema no amortiguado") {      
+      descargar(plot, myArray, "sistema no amortiguado/P vs T.jpg", "datos sistema no amortiguado/P vs T.csv", table);
     }
 
-    if (screenshot==true && grafica==2 && caso=="sistema no amortiguado") {
-      plot2 = new GPlot(this, 0, 0, 1200, 750);
-      plot2.setPoints(myArray2);
-      plot2.defaultDraw();
-      save("sistema no amortiguado/V vs T.jpg");
-      saveTable(table2, "datos sistema no amortiguado/V vs T.csv");
-      plot2 = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+    if (screenshot==true && grafica==2 && caso=="sistema no amortiguado") {   
+      descargar(plot2, myArray2, "sistema no amortiguado/V vs T.jpg", "datos sistema no amortiguado/V vs T.csv", table2);
     }
 
     if (screenshot==true && grafica==3 && caso=="sistema no amortiguado") {
-      plot3 = new GPlot(this, 0, 0, 1200, 750);
-      plot3.setPoints(myArray3);
-      plot3.defaultDraw();
-      save("sistema no amortiguado/A vs T.jpg");
-      saveTable(table3, "datos sistema no amortiguado/A vs T.csv");
-      plot3 = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+      descargar(plot3, myArray3, "sistema no amortiguado/A vs T.jpg", "datos sistema no amortiguado/A vs T.csv", table3);
     }
 
     //-----------------grafica de sistema amortiguado------------------------------- 
     if (screenshot==true && grafica==1 && caso=="sistema amortiguado") {
-      plot = new GPlot(this, 0, 0, 1200, 750);
-      plot.setPoints(myArray);
-      plot.defaultDraw();
-      save("sistema amortiguado/P vs T.jpg");
-      saveTable(table, "datos sistema amortiguado/P vs T.csv");
-      plot = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+      descargar(plot, myArray, "sistema amortiguado/P vs T.jpg", "datos sistema amortiguado/P vs T.csv", table);
     }
 
     if (screenshot==true && grafica==2 && caso=="sistema amortiguado") {
-      plot2 = new GPlot(this, 0, 0, 1200, 750);
-      plot2.setPoints(myArray2);
-      plot2.defaultDraw();
-      save("sistema amortiguado/V vs T.jpg");
-      saveTable(table2, "datos sistema amortiguado/V vs T.csv");
-      plot2 = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+      descargar(plot2, myArray2, "sistema amortiguado/V vs T.jpg", "datos sistema amortiguado/V vs T.csv", table2);
     }
 
     if (screenshot==true && grafica==3 && caso=="sistema amortiguado") {
-      plot3 = new GPlot(this, 0, 0, 1200, 750);
-      plot3.setPoints(myArray3);
-      plot3.defaultDraw();
-      save("sistema amortiguado/A vs T.jpg");
-      saveTable(table3, "datos sistema amortiguado/A vs T.csv");
-      plot3 = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+      descargar(plot3, myArray3, "sistema amortiguado/A vs T.jpg", "datos sistema amortiguado/A vs T.csv", table3);
     }
 
     //-----------------grafica de sistema oscilador forzado ------------------------------- 
     if (screenshot==true && grafica==1 && caso=="oscilaciones forzadas") {
-      plot = new GPlot(this, 0, 0, 1200, 750);
-      plot.setPoints(myArray);
-      plot.defaultDraw();
-      save("oscilaciones forzadas/P vs T.jpg");
-      saveTable(table, "datos oscilaciones forzadas/P vs T.csv");
-      plot = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+      descargar(plot, myArray, "oscilaciones forzadas/P vs T.jpg", "datos oscilaciones forzadas/P vs T.csv", table);
     }
 
     if (screenshot==true && grafica==2 && caso=="oscilaciones forzadas") {
-      plot2 = new GPlot(this, 0, 0, 1200, 750);
-      plot2.setPoints(myArray2);
-      plot2.defaultDraw();
-      save("oscilaciones forzadas/V vs T.jpg");
-      saveTable(table2, "datos oscilaciones forzadas/V vs T.csv");
-      plot2 = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+      descargar(plot2, myArray2, "oscilaciones forzadas/V vs T.jpg", "datos oscilaciones forzadas/V vs T.csv", table2);
     }
 
     if (screenshot==true && grafica==3 && caso=="oscilaciones forzadas") {
-      plot3 = new GPlot(this, 0, 0, 1200, 750);
-      plot3.setPoints(myArray3);
-      plot3.defaultDraw();
-      save("oscilaciones forzadas/A vs T.jpg");
-      saveTable(table3, "datos oscilaciones forzadas/A vs T.csv");
-      plot3 = new GPlot(this, 150, 80, 900, 600);
-      screenshot=false;
+      descargar(plot3, myArray3, "oscilaciones forzadas/A vs T.jpg", "datos oscilaciones forzadas/A vs T.csv", table3);
     }
 
 
@@ -963,9 +859,9 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux==true && aux==true && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
     t=t+key;
     conteo=t.length();
-    if (conteo>18) {
+    if (conteo>5) {
       aux=false;
-      t1=Float.parseFloat(t);
+      t1=Integer.parseInt(t);
       t=t+" Seg";
     }
   }  
@@ -975,8 +871,9 @@ void keyPressed() {
   //---------------------para ingresar los datos de la amplitud ------------------------------------
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     amplitud=amplitud+key;
+    amplitud=amplitud+key;
     conteo=amplitud.length();
-    if (conteo>20) {
+    if (conteo>10) {
       aux2=false;
       amplitud1[0]=Float.parseFloat(amplitud);
       amplitud=amplitud+" m";
@@ -988,7 +885,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     frecuencia=frecuencia+key;
     conteo=frecuencia.length();
-    if (conteo>17) {
+    if (conteo>10) {
       aux3=false;
       f=Float.parseFloat(frecuencia);
       frecuencia=frecuencia+" rads/s";
@@ -1000,7 +897,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && caso=="sistema no amortiguado" && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     fase_inicial=fase_inicial+key;
     conteo=fase_inicial.length();
-    if (conteo>18) {
+    if (conteo>10) {
       aux4=false;
       o=Float.parseFloat(fase_inicial);
       etapa=3;
@@ -1016,7 +913,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux2==true && aux==false && aux2==true && aux==false && (caso=="sistema amortiguado" || caso=="oscilaciones forzadas") && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.')) {
     masa=masa+key;
     conteo=masa.length();
-    if (conteo>20) {
+    if (conteo>10) {
       aux2=false;
       m=Float.parseFloat(masa);
       masa=masa+" kg";
@@ -1028,7 +925,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux3==true && aux2==false && aux3==true && aux==false && (caso=="sistema amortiguado" || caso=="oscilaciones forzadas") && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     elasticidad=elasticidad+key;
     conteo=elasticidad.length();
-    if (conteo>17) {
+    if (conteo>10) {
       aux3=false;
       k=Float.parseFloat(elasticidad);
       elasticidad=elasticidad+" N/m";
@@ -1040,7 +937,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux4==true && aux3==false && aux2==false && aux==false && aux4==true && (caso=="sistema amortiguado" || caso=="oscilaciones forzadas") && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     amortiguamiento=amortiguamiento+key;
     conteo=amortiguamiento.length();
-    if (conteo>18) {
+    if (conteo>10) {
       aux4=false;
       b1=Float.parseFloat(amortiguamiento);
       amortiguamiento=amortiguamiento+" kg/s";
@@ -1051,7 +948,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT && aux3==false && aux2==false && aux==false && aux6==true && caso=="sistema amortiguado" && aux4==false && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     amplitud=amplitud+key;
     conteo=amplitud.length();
-    if (conteo>18) {
+    if (conteo>10) {
       aux6=false;
       a=Float.parseFloat(amplitud);
       amplitud=amplitud+" m";
@@ -1063,7 +960,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux5==true && aux3==false && aux2==false && aux==false && aux5==true && caso=="sistema amortiguado" && aux4==false && aux6==false && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     angulo_de_fase=angulo_de_fase+key;
     conteo=angulo_de_fase.length();
-    if (conteo>18) {
+    if (conteo>10) {
       aux5=false;
       o1=Float.parseFloat(angulo_de_fase);
       etapa=3;
@@ -1078,7 +975,7 @@ void keyPressed() {
   if (cont==1 && key!=ENTER && key!=BACKSPACE&&keyCode != SHIFT && keyCode != CONTROL && keyCode != ALT&& aux5==true && aux3==false && aux2==false && aux==false  && caso=="oscilaciones forzadas" && aux4==false  && (key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || key=='6' || key=='7' || key=='8' || key=='9' || key=='0' || key=='.' || key=='-')) {
     frecuencia=frecuencia+key;
     conteo=frecuencia.length();
-    if (conteo>18) {
+    if (conteo>10) {
       aux5=false;
       f_angular=Float.parseFloat(frecuencia);
       etapa=3;
@@ -1126,7 +1023,7 @@ void mouseClicked() {
 
     try {
       aux=false;
-      t1=Float.parseFloat(t);
+      t1=Integer.parseInt(t);
       t=t+" Seg";
     }
     catch(Exception e) {
@@ -1415,8 +1312,8 @@ void mouseClicked() {
   }
 }
 
-
-public void menus(int posx, int posy, String titulo, int posxx, int posyy,int posxxx,int posyyy,int posxxxx,int posyyyy,int posicionx,int posiciony,int posicionxx,int posicionyy, String variable, int otra) {
+//--------------------funcion para crear menus para ingresar los datos && ahorro de lineas de codigo:180-----------------------------------------
+public void menus(int posx, int posy, String titulo, int posxx, int posyy, int posxxx, int posyyy, int posxxxx, int posyyyy, int posicionx, int posiciony, int posicionxx, int posicionyy, String variable, int otra) {
 
   fill(215, 219, 221);
   noStroke();
@@ -1430,5 +1327,39 @@ public void menus(int posx, int posy, String titulo, int posxx, int posyy,int po
   rect(posicionx, posiciony, 350, 50);
   fill(0, 0, 0);
   text(variable, posicionxx, posicionyy);
-  
+}
+
+//-----------------------------cargar las graficas- lineas ahorradas:36---------------------------------------------------------------------------
+public void graficas() {
+
+  myArray.add(cont, pos1[cont]);
+  myArray2.add(cont, vel1[cont]);
+  myArray3.add(cont, ace1[cont]);
+
+
+  TableRow newRow = table.addRow();
+  newRow.setFloat("posicion", pos1[cont]);
+  newRow.setFloat("tiempo", cont);
+
+  TableRow newRow2 = table2.addRow();
+  newRow2.setFloat("Velocidad", vel1[cont]);
+  newRow2.setFloat("tiempo", cont);
+
+
+  TableRow newRow3 = table3.addRow();
+  newRow3.setFloat("Aceleracion", ace1[cont]);
+  newRow3.setFloat("tiempo", cont);
+}
+
+
+//--------------------------funcion para descargar los archivos de las graficas- lineas ahorradas:63  ---------------------------------------
+public void descargar(GPlot plot, GPointsArray myArray, String nombre, String nombre2, Table table) {
+
+  plot = new GPlot(this, 0, 0, 1200, 750);
+  plot.setPoints(myArray);
+  plot.defaultDraw();
+  save(nombre);
+  saveTable(table, nombre2);
+  plot = new GPlot(this, 150, 80, 900, 600);
+  screenshot=false;
 }
